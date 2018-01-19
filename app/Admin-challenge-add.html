@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Admin Challenge Add</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <link href='css/main.css' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <div class="page container bg-light">
+      <header class="row bg-white px-4">
+        <div class="col col-lg-2">
+          <div >
+            <a href="" class="logo">
+             <img src="images/logo.svg" alt="">
+            </a>
+          </div>
+        </div>
+        <div class="col justify-content-md-end">
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Chalenges</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Stats</a>
+            </li>
+          </ul>
+        </div>
+      </header>
+      <div class="bg-light py-5">
+        <form>
+          <div class="p-5 bg-white box-shadow text-secondary br-5">
+            <h6 class="text-uppercase mb-4">NEW CHALLENGE</h6>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Title</label>
+              <input type="password" class="form-control" id="exampleInput1" placeholder="Title">
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Description</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="radio-group mb-4">
+              <h6>Reward</h6>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="form-check-label" for="inlineRadio1">Badge</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">Points</label>
+              </div>
+            </div>
+            <div class="input-group mb-3 add-file">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile02">
+                <label class="custom-file-label" for="inputGroupFile02">Browse</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Supply</label>
+              <input type="password" class="form-control" id="exampleInput2" placeholder="Supply">
+            </div>
+            <div class="form-group mb-4">
+              <label for="exampleInputPassword1">Wallet</label>
+              <input type="password" class="form-control" id="exampleInput3" placeholder="Wallet">
+            </div>
+            <button type="button" class="btn btn-secondary">Submit</button>
+            <button type="button" class="btn btn-outline-secondary">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>  

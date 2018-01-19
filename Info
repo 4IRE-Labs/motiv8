@@ -1,0 +1,65 @@
+------------------------- run web-pack front-end ---------------------------
+
+npm run dev
+
+------------------------ To deploy a contract on Rinkeby ----------------------------
+
+
+1. Load rinkeby blocks
+geth --datadir=./chaindata --rinkeby
+
+2. Open mist
+/Applications/Mist.app/Contents/MacOS/Mist --rpc /Users/bomalkevych/Documents/blockchain/my_work/assignment_1/chaindata/geth.ipc
+
+3. Attach to geth
+geth attach /Users/bomalkevych/Documents/blockchain/rinkeby/chaindata/geth.ipc
+
+4. To get sync status or get last synced block (optional)
+eth.syncing
+
+Result will be like:
+{
+  currentBlock: 13445,
+  highestBlock: 1604086,
+  knownStates: 32228,
+  pulledStates: 19524,
+  startingBlock: 0
+}
+
+5. Add funds to an account  https://www.rinkeby.io/#faucet
+
+6. To see transactions details by you account number
+https://rinkeby.etherscan.io/
+
+7. Stop sync transactions if it finished and start it with parameters:
+geth --datadir=./chaindata --rinkeby --rpc —rpcapi db,eth,net,web3,personal 
+
+8. Configure truffle deploy. Open truffle.js and add:
+
+rinkeby: {
+    host: "localhost",
+    port: 8545,
+    network_id: "4", // Rinkeby ID 4
+    from: "0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e", // account from which to deploy
+    gas: 6712390
+}
+
+9. Open terminal where u attached. Then unlock your account with command:
+personal.unlockAccount("0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e")
+
+10. Finally deploy your contract with command:
+truffle migrate --network rinkeby
+
+
+----------------------- Truffle helpers -----------------------------
+
+connect to existing session:
+Truffle develop  --log
+
+open consone:
+truffle develop
+
+debug:
+truffle debug #hashOfTransaction
+
+----------------------------------------------------

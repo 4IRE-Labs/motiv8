@@ -1,0 +1,23 @@
+pragma solidity ^0.4.8;
+
+import "zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "zeppelin-solidity/contracts/token/StandardToken.sol";
+
+
+/**
+ * @title Motiv8 Standarted ERC20 Token
+ *
+ * @dev Implementation of the basic standard token.
+ * @dev https://github.com/ethereum/EIPs/issues/20
+ */
+contract Motiv8ERC20Token is StandardToken, Ownable {
+
+  string public constant symbol = "MTV8"; //MTVB - badge, MTVP - points
+  string public constant name = "Motiv8";
+  uint8 public constant decimals = 0;
+  uint256 public totalSupply = 0;
+
+  // Constructor
+  function Motiv8ERC20Token() public { }
+
+}
