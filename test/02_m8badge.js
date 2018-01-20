@@ -22,18 +22,36 @@ contract('M8BadgeToken', function (accounts) {
     //     });
     // });
 
-    it("should create new badge for trnsaction that doesn't exist", function() {            
-        contract.create("1", "New badge for Tx #1", accounts[0]).then(tx => {
+    it("should create new badge for transaction that doesn't exist", function() {                    
+        contract.create(
+            web3.toDecimal('0xee9f087ca77195ec40a79cd9b44626fc50e5183cb7dbfdf447cf36c9a6892025'), 
+            "Challenge 0", accounts[0]).then(tx => {            
             return contract.tokensOfOwner.call(accounts[0]);            
         }).then(tokens => {
             assert.equal(tokens.length, 2, "Balance of account should equal 1");
         });
     });
 
+    it("should return list of claimed transaction for Challenge 0", function(){
+        contract.claimedChallengeTransactions.call("Challenge 0").then(txHashes => {
+            assert.equal(txHashes.length, 2, "Number of transactions should equal number of badges for this challenge.");
+        });
+    });
+
+    it("should estimate gas", function(){
+        contract.create.estimateGas("3", "New badge for Tx #3", accounts[0]).then(gas => {            
+            console.log("Estimated gas: " + gas);
+            assert.equal(gas > 0, true, "Gas should be more then 0");
+        });
+    }); 
+
     it("should return badge with correct name", function(){
-        contract.getBadge.call("1").then(badge => {
-            console.log("Badge #1 name: " + badge);
-            assert.equal(badge, "New badge for Tx #1", "Badge name should be equal as previousely created");
+        contract.getBadge.call("1").then(function (badge) {
+            console.log("Badge #1 txHash: " + badge[0]);
+            console.log("Badge #1 face: " + badge[1]);
+            console.log("Badge #1 mask: " + badge[2]);
+            console.log("Badge #1 color: " + badge[3]);
+            assert.equal(badge[0], "Challenge 0", "Badge challenge should be equal as previousely created");
         });
     });
 

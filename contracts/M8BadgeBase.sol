@@ -10,8 +10,11 @@ contract M8BadgeBase {
     event Transfer(address from, address to, uint256 tokenId);
 
     struct M8Badge {
-        string donationTransactionId;
-        string name;
+        uint txHash;
+        string challenge;
+        uint face;
+        uint mask;
+        uint color;
     }
 
     M8Badge[] badges; 
@@ -45,11 +48,14 @@ contract M8BadgeBase {
         Transfer(_from, _to, _tokenId);
     }
 
-    function _createBadge(string _donationTransactionId, string _name, address _owner) internal returns (uint) {
+    function _createBadge(uint _txHash, string _challenge, address _owner) internal returns (uint) {
 
         M8Badge memory _badge = M8Badge({
-            donationTransactionId: _donationTransactionId,
-            name: _name
+            txHash: _txHash,
+            challenge: _challenge,
+            face: uint(keccak256(now))%8,
+            mask: uint(keccak256(now + 1))%4,
+            color: uint(keccak256(now + 2))%20
         });
 
         uint256 newBadgeId = badges.push(_badge) - 1;
