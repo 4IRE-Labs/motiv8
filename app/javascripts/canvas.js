@@ -1,4 +1,5 @@
 window.addEventListener('load', function () {
+    /*
     Badge.drawBadge({
         canvasId: "canvas 1",
         face: 1,
@@ -19,6 +20,7 @@ window.addEventListener('load', function () {
         mask: 1,
         color: 4
     });
+    */
 });
 
 window.Badge = {
