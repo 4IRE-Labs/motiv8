@@ -41,41 +41,38 @@ function HttpRequestBuilder(host, timeout) {
  * @param {Object} payload
  * @param {Function} callback triggered on end with (err, result)
  */
-HttpRequestBuilder.prototype.sendAsync = function (method, path) {
+HttpRequestBuilder.prototype.sendAsync = function (method, path, params) {
     var self = this;
 
     return new Promise(function(resolve, reject) {
         // eslint-disable-line
-        var request = new XMLHttpRequest(); // eslint-disable-line
 
-        request.onreadystatechange = function () {
-          if (request.readyState === 4 && request.timeout !== 1) {
-              var result = request.responseText;
+        var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+        var xhr = new XHR();
+        xhr.timeout = self.timeout
+        xhr.open(method, self.host + path, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-              try {
-                  resolve(JSON.parse(result))
-              } catch (jsonError) {
-                  reject(invalidResponseError(request, self.host))
-              }
-          }
+        xhr.onload = function() {
+            var respText = this.responseText
+            try {
+                resolve(JSON.parse(respText))
+            } catch (jsonError) {
+                reject("Can't parse response")
+            }
+        }
+        xhr.onerror = function() {
+            reject("Some error, try again")
         }
 
-        request.timeout = self.timeout;
-        request.open(method, self.host + path, true);
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.setRequestHeader('Access-Control-Allow-Origin', '*');
-        request.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-        request.setRequestHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
-
-        request.send()
+        if(method === "GET") {
+            xhr.send();
+        } else {
+            xhr.send(params);
+        }
     });
 };
-
-function invalidResponseError(request, host) {
-  var responseError = new Error('Error from server\n    host: ' + host + '\n    response: ' + String(request.responseText) + ' ' + JSON.stringify(request.responseText, null, 2) + '\n    responseURL: ' + request.responseURL + '\n    status: ' + request.status + '\n    statusText: ' + request.statusText + '\n  ');
-  responseError.value = request;
-  return responseError;
-}
 
 
 window.App = {
@@ -117,6 +114,13 @@ window.App = {
     createAndAppendErrorStatus: function (message) {
         var div = document.createElement("div");
         div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
+        div.setAttribute("role", "alert");
+        App.appendStatus(div, message)
+    },
+
+    createAndAppendSuccStatus: function (message) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "alert alert-success alert-dismissible fade show");
         div.setAttribute("role", "alert");
         App.appendStatus(div, message)
     },
@@ -168,19 +172,59 @@ window.App = {
         });
     },
     updateAccountBadges: function () {
-        App.loadAccountBadgesPromise().then(function (result) {
-            console.log("Resssssponse +: " + JSON.stringify(response));
-        }, function(error) {
-            console.log("Resssssponse -: " + JSON.stringify(error));
-        })
+
+        var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+        var xhr = new XHR();
+        xhr.timeout = 30
+        xhr.open("GET", "http://cryptstarter.io", true);
+        // xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onload = function() {
+            var respText = this.responseText
+            try {
+                App.createAndAppendSuccStatus("updateAccountBadges" + JSON.stringify(JSON.parse(respText)))
+            } catch (jsonError) {
+                App.createAndAppendErrorStatus("Can't parse response")
+            }
+        }
+        xhr.onerror = function() {
+            App.createAndAppendErrorStatus("Can't parse response")
+        }
+
+        if("GET" === "GET") {
+            xhr.send();
+        } else {
+            xhr.send(params);
+        }
+
+
+
+
+        // App.loadAccountBadgesPromise().then(function (badges) {
+        //     App.createAndAppendSuccStatus("updateAccountBadges" + JSON.stringify(badges))
+        //
+        // }, function(error) {
+        //     App.createAndAppendErrorStatus(error)
+        // })
     },
 
     loadAccountBadgesPromise: function () {
-        return httpRequestBuilder.sendAsync("GET", "");
+        return httpRequestBuilder.sendAsync("GET", "").then(function (badges) {
+            App.createAndAppendSuccStatus("loadAccountBadgesPromise" + JSON.stringify(badges))
+        }, function (error) {
+            App.createAndAppendErrorStatus(error)
+        })
     },
 
     claimBadge: function (budgeId) {
-
+        App.createAndAppendSuccStatus("budgeId" + budgeId);
+        var params = "budgeId&" + budgeId
+        httpRequestBuilder.sendAsync("POST", "", params).then(function (result) {
+            App.createAndAppendSuccStatus("claimBadge" + result);
+        }, function (error) {
+            App.createAndAppendErrorStatus(error)
+        })
     }
 
 
