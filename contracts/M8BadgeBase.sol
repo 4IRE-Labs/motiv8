@@ -11,7 +11,7 @@ contract M8BadgeBase {
 
     struct M8Badge {
         uint txHash;
-        string challange;
+        string challenge;
         uint face;
         uint mask;
         uint color;
@@ -48,11 +48,11 @@ contract M8BadgeBase {
         Transfer(_from, _to, _tokenId);
     }
 
-    function _createBadge(uint _txHash, string _challange, address _owner) internal returns (uint) {
+    function _createBadge(uint _txHash, string _challenge, address _owner) internal returns (uint) {
 
         M8Badge memory _badge = M8Badge({
             txHash: _txHash,
-            challange: _challange,
+            challenge: _challenge,
             face: uint(keccak256(now))%8,
             mask: uint(keccak256(now + 1))%4,
             color: uint(keccak256(now + 2))%20

@@ -9,27 +9,27 @@ contract M8BadgeToken is M8BadgeOwnership, Ownable {
     mapping(string=>uint[]) challengeTransactions;
 
     function M8BadgeToken() public {
-        create(0, "Challange 0", msg.sender);
+        create(0, "Challenge 0", msg.sender);
     }
 
-    function create(uint _txHash, string _challangeId, address _owner ) onlyOwner public returns (uint) {
+    function create(uint _txHash, string _challengeId, address _owner ) onlyOwner public returns (uint) {
         require(!claimedTransactions[_txHash]);  
         //@dev TODO: implement merkle proof protection              
         claimedTransactions[_txHash] = true;
-        challengeTransactions[_challangeId].push(_txHash);
-        return _createBadge(_txHash, _challangeId, _owner);
+        challengeTransactions[_challengeId].push(_txHash);
+        return _createBadge(_txHash, _challengeId, _owner);
     }
 
-    function claimedChallengeTransactions(string _challangeId) public view returns (uint[] txHashes) {
-        uint[] storage txs = challengeTransactions[_challangeId];
+    function claimedChallengeTransactions(string _challengeId) public view returns (uint[] txHashes) {
+        uint[] storage txs = challengeTransactions[_challengeId];
         txHashes = txs;
     }
 
     /// @dev returns badge information
-    function getBadge(uint256 _tokenId) public view returns (string challange, uint face, uint mask, uint color, uint txHash) {
+    function getBadge(uint256 _tokenId) public view returns (string challenge, uint face, uint mask, uint color, uint txHash) {
         require(badges.length > _tokenId);
         M8Badge storage badge = badges[_tokenId];
-        challange = string(badge.challange);
+        challenge = string(badge.challenge);
         face = uint(badge.face);
         mask = uint(badge.mask);
         color = uint(badge.color);

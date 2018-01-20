@@ -25,16 +25,16 @@ contract('M8BadgeToken', function (accounts) {
     it("should create new badge for transaction that doesn't exist", function() {                    
         contract.create(
             web3.toDecimal('0xee9f087ca77195ec40a79cd9b44626fc50e5183cb7dbfdf447cf36c9a6892025'), 
-            "Challange 0", accounts[0]).then(tx => {            
+            "Challenge 0", accounts[0]).then(tx => {            
             return contract.tokensOfOwner.call(accounts[0]);            
         }).then(tokens => {
             assert.equal(tokens.length, 2, "Balance of account should equal 1");
         });
     });
 
-    it("should return list of claimed transaction for Challange 0", function(){
-        contract.claimedChallengeTransactions.call("Challange 0").then(txHashes => {
-            assert.equal(txHashes.length, 2, "Number of transactions should equal number of badges for this challange.");
+    it("should return list of claimed transaction for Challenge 0", function(){
+        contract.claimedChallengeTransactions.call("Challenge 0").then(txHashes => {
+            assert.equal(txHashes.length, 2, "Number of transactions should equal number of badges for this challenge.");
         });
     });
 
@@ -51,7 +51,7 @@ contract('M8BadgeToken', function (accounts) {
             console.log("Badge #1 face: " + badge[1]);
             console.log("Badge #1 mask: " + badge[2]);
             console.log("Badge #1 color: " + badge[3]);
-            assert.equal(badge[0], "Challange 0", "Badge challange should be equal as previousely created");
+            assert.equal(badge[0], "Challenge 0", "Badge challenge should be equal as previousely created");
         });
     });
 
