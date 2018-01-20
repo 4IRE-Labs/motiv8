@@ -18,6 +18,13 @@ contract M8BadgeToken is M8BadgeOwnership, Ownable {
         return _createBadge(_donationTransactionId, _name, _owner);
     }
 
+    /// @dev returns badge information
+    function getBadge(uint256 _tokenId) public view returns (string name) {
+        require(badges.length > _tokenId);
+        M8Badge storage badge = badges[_tokenId];
+        name = string(badge.name);
+    }
+
     function addDonationWallet(address wallet) onlyOwner public returns(uint256) {
         for (uint256 index = 0; index < donationWallets.length; index ++) {
             require(donationWallets[index] != wallet);
@@ -26,8 +33,13 @@ contract M8BadgeToken is M8BadgeOwnership, Ownable {
     }
 
     function deleteWallet(uint256 walletId) onlyOwner public returns(uint256){
-        require(walletId < donationWallets.length);        
-        delete donationWallets[walletId];
+        require(walletId >= donationWallets.length);   
+
+        for (uint i = walletId; i<donationWallets.length-1; i++){
+            donationWallets[i] = donationWallets[i+1];
+        }
+        delete donationWallets[donationWallets.length-1];
+        donationWallets.length--;
         return donationWallets.length;
     }
 
