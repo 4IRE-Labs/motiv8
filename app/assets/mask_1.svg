@@ -1,0 +1,14 @@
+<svg width="400" height="400" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>L2 Mask - 1</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-364 213)">
+<g id="L2 Mask - 1">
+<g id="Subtract">
+<use xlink:href="#path0_fill" transform="translate(364 -213)" fill="#FFFFFF"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" fill-rule="evenodd" d="M 400 0L 0 0L 0 400L 400 400L 400 0ZM 200.5 387C 304.053 387 388 303.053 388 199.5C 388 95.9466 304.053 12 200.5 12C 96.9466 12 13 95.9466 13 199.5C 13 303.053 96.9466 387 200.5 387Z"/>
+</defs>
+</svg>

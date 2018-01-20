@@ -1,0 +1,41 @@
+<svg width="400" height="400" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>L4 Face - 5</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-2432 -953)">
+<clipPath id="clip-0" clip-rule="evenodd">
+<path d="M 2432 953L 2832 953L 2832 1353L 2432 1353L 2432 953Z" fill="#FFFFFF"/>
+</clipPath>
+<g id="L4 Face - 5" clip-path="url(#clip-0)">
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="translate(2539 1119)" fill="#FFFFFF"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path1_fill" transform="translate(2546.6 1121.4)" fill="#231F20"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="translate(2671.9 1119)" fill="#FFFFFF"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path3_fill" transform="translate(2689.7 1146.8)" fill="#231F20"/>
+</g>
+</g>
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path4_fill" transform="translate(2593 1205)" fill="#9E0017"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path5_fill" transform="translate(2652.73 1207.1)" fill="#FFFFFF"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 27 54C 41.9117 54 54 41.9117 54 27C 54 12.0883 41.9117 0 27 0C 12.0883 0 0 12.0883 0 27C 0 41.9117 12.0883 54 27 54Z"/>
+<path id="path1_fill" d="M 12.7 25.4C 19.714 25.4 25.4 19.714 25.4 12.7C 25.4 5.68598 19.714 0 12.7 0C 5.68598 0 0 5.68598 0 12.7C 0 19.714 5.68598 25.4 12.7 25.4Z"/>
+<path id="path2_fill" d="M 27 54C 41.9117 54 54 41.9117 54 27C 54 12.0883 41.9117 0 27 0C 12.0883 0 -6.10352e-06 12.0883 -6.10352e-06 27C -6.10352e-06 41.9117 12.0883 54 27 54Z"/>
+<path id="path3_fill" d="M 12 24C 18.6274 24 24 18.6274 24 12C 24 5.37258 18.6274 0 12 0C 5.37258 0 -3.05176e-06 5.37258 -3.05176e-06 12C -3.05176e-06 18.6274 5.37258 24 12 24Z"/>
+<path id="path4_fill" d="M 1.62826 15.5477C 1.62826 15.5477 14.2283 2.8477 41.1283 0.547703C 68.0283 -1.8523 81.9283 3.9477 80.6283 11.8477C 79.3283 19.7477 73.8283 22.6477 64.6283 18.9477C 55.4283 15.2477 48.0283 12.3477 35.3283 17.8477C 22.6283 23.3477 -7.27174 34.2477 1.62826 15.5477Z"/>
+<path id="path5_fill" d="M 1 0.143555L 7.62939e-07 10.3436L 11.2 12.0436L 12.6 2.24356C 12.6 2.14356 8.3 -0.656445 1 0.143555Z"/>
+</defs>
+</svg>
