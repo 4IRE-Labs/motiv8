@@ -19,6 +19,64 @@ var ERC20TokenContract = contract(erc20_token_artifacts);
 // For application bootstrapping, check out window.addEventListener below.
 var accounts;
 var account;
+var httpRequestBuilder = new HttpRequestBuilder("http://cryptstarter.io", 30);
+
+
+function HttpRequestBuilder(host, timeout) {
+  if (!(this instanceof HttpRequestBuilder)) {
+    throw new Error('the HttpRequestBuilder instance requires the "new" flag in order to function normally.');
+  }
+  if (host == undefined) {
+    throw new Error('[ethjs-provider-http] the HttpProvider instance requires that the host be specified');
+  }
+
+  this.host = host;
+  this.timeout = timeout || 30;
+}
+
+/**
+ * Should be used to make async request
+ *
+ * @method sendAsync
+ * @param {Object} payload
+ * @param {Function} callback triggered on end with (err, result)
+ */
+HttpRequestBuilder.prototype.sendAsync = function (method, path) {
+    var self = this;
+
+    return new Promise(function(resolve, reject) {
+        // eslint-disable-line
+        var request = new XMLHttpRequest(); // eslint-disable-line
+
+        request.onreadystatechange = function () {
+          if (request.readyState === 4 && request.timeout !== 1) {
+              var result = request.responseText;
+
+              try {
+                  resolve(JSON.parse(result))
+              } catch (jsonError) {
+                  reject(invalidResponseError(request, self.host))
+              }
+          }
+        }
+
+        request.timeout = self.timeout;
+        request.open(method, self.host + path, true);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.setRequestHeader('Access-Control-Allow-Origin', '*');
+        request.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        request.setRequestHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+
+        request.send()
+    });
+};
+
+function invalidResponseError(request, host) {
+  var responseError = new Error('Error from server\n    host: ' + host + '\n    response: ' + String(request.responseText) + ' ' + JSON.stringify(request.responseText, null, 2) + '\n    responseURL: ' + request.responseURL + '\n    status: ' + request.status + '\n    statusText: ' + request.statusText + '\n  ');
+  responseError.value = request;
+  return responseError;
+}
+
 
 window.App = {
     start: function () {
@@ -53,7 +111,7 @@ window.App = {
 
     setActiveAccountAddress: function (activeAccountAddress) {
         var accountAddress = document.getElementById("activeAccountAddress")
-        accountAddress.innerHTML = activeAccountAddress
+        accountAddress.innerHTML = "Account: " + activeAccountAddress
     },
 
     createAndAppendErrorStatus: function (message) {
@@ -73,27 +131,16 @@ window.App = {
     },
 
     printImportantInformation: function () {
-        ERC20TokenContract.deployed().then(function (instance) {
-            var divAddress = document.createElement("div");
-            divAddress.appendChild(document.createTextNode("Address Token: " + instance.address));
-            divAddress.setAttribute("class", "alert alert-info");
-            document.getElementById("importantInformation").appendChild(divAddress);
-        });
-
         web3.eth.getAccounts(function (err, accs) {
             App.setActiveAccountAddress(accs[0])
+        });
+    },
 
-            // web3.eth.getBalance(accs[0], function (err1, balance) {
-            //     var divAddress = document.createElement("div");
-            //     var div = document.createElement("div");
-            //     div.appendChild(document.createTextNode("Active Account: " + accs[0]));
-            //     var div2 = document.createElement("div");
-            //     div2.appendChild(document.createTextNode("Balance in Ether: " + web3.fromWei(balance, "ether")));
-            //     divAddress.appendChild(div);
-            //     divAddress.appendChild(div2);
-            //     divAddress.setAttribute("class", "alert alert-info");
-            //     document.getElementById("importantInformation").appendChild(divAddress);
-            // });
+    checkMetamaskConnection: function () {
+        web3.eth.getAccounts(function (err, accs) {
+            if (err != undefined || accs.length == 0) {
+                window.location.replace("/user-using-wrong-network.html");
+            }
         });
     },
 
@@ -104,8 +151,8 @@ window.App = {
         App.updateAccountPoints();
         App.updateAccountBadges();
 
-        // App.watchTokenEvents();
-        // App.printImportantInformation();
+        App.printImportantInformation();
+        App.checkMetamaskConnection()
     },
     updateAccountPoints: function () {
         var tokenInstance;
@@ -121,8 +168,20 @@ window.App = {
         });
     },
     updateAccountBadges: function () {
-
+        App.loadAccountBadgesPromise().then(function (result) {
+            console.log("Resssssponse +: " + JSON.stringify(response));
+        }, function(error) {
+            console.log("Resssssponse -: " + JSON.stringify(error));
+        })
     },
+
+    loadAccountBadgesPromise: function () {
+        return httpRequestBuilder.sendAsync("GET", "");
+    },
+
+    claimBadge: function (budgeId) {
+
+    }
 
 
 
@@ -164,7 +223,7 @@ window.App = {
 window.addEventListener('load', function () {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof web3 !== 'undefined') {
-        console.warn("Using web3 detected from external source. If you find that your accounts don't appear or you have 0 MetaCoin, ensure you've configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask")
+        console.warn("Using web3 detected from external source. If you find that your accounts don't appear or you have, ensure you've configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask")
         // Use Mist/MetaMask's provider
         window.web3 = new Web3(web3.currentProvider);
     } else {
