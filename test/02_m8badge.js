@@ -22,13 +22,20 @@ contract('M8BadgeToken', function (accounts) {
     //     });
     // });
 
-    it("should create new badge for trnsaction that doesn't exist", function() {            
-        contract.create("1", "New badge for Tx #1", accounts[0]).then(tx => {
+    it("should create new badge for trnsaction that doesn't exist", function() {                    
+        contract.create("1", "New badge for Tx #1", accounts[0]).then(tx => {            
             return contract.tokensOfOwner.call(accounts[0]);            
         }).then(tokens => {
             assert.equal(tokens.length, 2, "Balance of account should equal 1");
         });
     });
+
+    it("should estimate gas", function(){
+        contract.create.estimateGas("3", "New badge for Tx #3", accounts[0]).then(gas => {            
+            console.log("Estimated gas: " + gas);
+            assert.equal(gas > 0, true, "Gas should be more then 0");
+        });
+    }); 
 
     it("should return badge with correct name", function(){
         contract.getBadge.call("1").then(badge => {
