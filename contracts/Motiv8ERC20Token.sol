@@ -15,9 +15,11 @@ contract Motiv8ERC20Token is StandardToken, Ownable {
   string public constant symbol = "MTV8"; //MTVB - badge, MTVP - points
   string public constant name = "Motiv8";
   uint8 public constant decimals = 0;
-  uint256 public totalSupply = 0;
+  uint256 public totalSupply = 100000000000000;
 
   // Constructor
-  function Motiv8ERC20Token() public { }
+  function Motiv8ERC20Token() public {
+    balances[msg.sender] = totalSupply;
+  }
 
 }

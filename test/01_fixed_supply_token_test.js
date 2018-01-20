@@ -33,6 +33,9 @@ contract('Motiv8ERC20Token', function(accounts) {
         var account_one = accounts[0];
         var account_two = accounts[1];
 
+        console.log("account 1: " + account_one);
+        console.log("account 2: " + account_two);
+
         var account_one_starting_balance;
         var account_two_starting_balance;
         var account_one_ending_balance;
