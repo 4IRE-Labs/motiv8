@@ -22,11 +22,18 @@ contract('M8BadgeToken', function (accounts) {
     //     });
     // });
 
-    it("should create new badge for trnsaction that doesn't exist", function(){            
+    it("should create new badge for trnsaction that doesn't exist", function() {            
         contract.create("1", "New badge for Tx #1", accounts[0]).then(tx => {
             return contract.tokensOfOwner.call(accounts[0]);            
         }).then(tokens => {
             assert.equal(tokens.length, 2, "Balance of account should equal 1");
+        });
+    });
+
+    it("should return badge with correct name", function(){
+        contract.getBadge.call("1").then(badge => {
+            console.log("Badge #1 name: " + badge);
+            assert.equal(badge, "New badge for Tx #1", "Badge name should be equal as previousely created");
         });
     });
 
@@ -38,4 +45,18 @@ contract('M8BadgeToken', function (accounts) {
             assert.equal(wallets[0], '0x5aeda56215b167893e80b4fe645ba6d5bab767de', 'Wallet should be successfully added');
         });
     });
+
+    it("should delete item from list of donation wallets", function(){
+        var walletsBeforeDeletion = 0;
+        contract.allWallets.call().then(wallets => {
+            console.log("# of wallets in array is: " + wallets.length);
+            walletsBeforeDeletion = wallets.length;
+            return contract.deleteWallet(wallets[0]);
+        }).then(tx => {
+            return contract.allWallets.call()
+        }).then(wallets => {
+            assert.equal(walletsBeforeDeletion - wallets.length, 1, "Number of wallets after deletion should be 1 less then before");
+        });
+    });
+
 });
