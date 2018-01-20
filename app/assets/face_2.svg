@@ -1,0 +1,49 @@
+<svg width="400" height="400" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>L4 Face - 2</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-924 -953)">
+<clipPath id="clip-0" clip-rule="evenodd">
+<path d="M 924 953L 1324 953L 1324 1353L 924 1353L 924 953Z" fill="#FFFFFF"/>
+</clipPath>
+<g id="L4 Face - 2" clip-path="url(#clip-0)">
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="translate(1099.2 1207.2)" fill="#B5000D"/>
+</g>
+<g id="Group">
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path1_fill" transform="translate(1028 1119)" fill="#FFFFFF"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="translate(1039.9 1130.9)" fill="#231F20"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path3_fill" transform="translate(1164.5 1119)" fill="#FFFFFF"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path4_fill" transform="translate(1176.4 1130.9)" fill="#231F20"/>
+</g>
+</g>
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path5_fill" transform="translate(1045.2 1178.7)" fill="#ED1C24"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path6_fill" transform="translate(1177.8 1178.7)" fill="#ED1C24"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 42.8 13.4L 6.7 13.4C 3 13.4 -3.05176e-06 10.4 -3.05176e-06 6.7C -3.05176e-06 3 3 -3.05176e-06 6.7 -3.05176e-06L 42.8 -3.05176e-06C 46.5 -3.05176e-06 49.5 3 49.5 6.7C 49.5 10.4 46.5 13.4 42.8 13.4Z"/>
+<path id="path1_fill" d="M 27.7 55.4C 42.9983 55.4 55.4 42.9983 55.4 27.7C 55.4 12.4017 42.9983 0 27.7 0C 12.4017 0 0 12.4017 0 27.7C 0 42.9983 12.4017 55.4 27.7 55.4Z"/>
+<path id="path2_fill" d="M 15.8 31.6C 24.5261 31.6 31.6 24.5261 31.6 15.8C 31.6 7.0739 24.5261 0 15.8 0C 7.0739 0 0 7.0739 0 15.8C 0 24.5261 7.0739 31.6 15.8 31.6Z"/>
+<path id="path3_fill" d="M 27.7 55.4C 42.9983 55.4 55.4 42.9983 55.4 27.7C 55.4 12.4017 42.9983 0 27.7 0C 12.4017 0 0 12.4017 0 27.7C 0 42.9983 12.4017 55.4 27.7 55.4Z"/>
+<path id="path4_fill" d="M 15.8 31.6C 24.5261 31.6 31.6 24.5261 31.6 15.8C 31.6 7.0739 24.5261 0 15.8 0C 7.0739 0 -6.10352e-06 7.0739 -6.10352e-06 15.8C -6.10352e-06 24.5261 7.0739 31.6 15.8 31.6Z"/>
+<path id="path5_fill" d="M 16.1 32.2C 24.9918 32.2 32.2 24.9918 32.2 16.1C 32.2 7.20822 24.9918 0 16.1 0C 7.20821 0 0 7.20822 0 16.1C 0 24.9918 7.20821 32.2 16.1 32.2Z"/>
+<path id="path6_fill" d="M 16.1 32.2C 24.9918 32.2 32.2 24.9918 32.2 16.1C 32.2 7.20822 24.9918 0 16.1 0C 7.20821 0 3.05176e-06 7.20822 3.05176e-06 16.1C 3.05176e-06 24.9918 7.20821 32.2 16.1 32.2Z"/>
+</defs>
+</svg>

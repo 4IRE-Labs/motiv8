@@ -9,7 +9,7 @@ const webpack = require('webpack');
 // console.log(`=> bootstrap-loader configuration: ${bootstrapEntryPoints.dev}`);
 
 module.exports = {
-    entry: './app/javascripts/app.js',
+    entry: ['./app/javascripts/app.js', './app/javascripts/canvas.js'],
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'app.js'
@@ -19,6 +19,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: './app/index.html', to: "index.html"},
             {from: './app/index1.html', to: "index1.html"}, // to test
+            {from: './app/canvas.html', to: "canvas.html"},
 
             {from: './app/activity-activity.html', to: "activity-activity.html"},
             {from: './app/admin-challenge-add.html', to: "admin-challenge-add.html"},
@@ -37,6 +38,25 @@ module.exports = {
             {from: './app/images/image.png', to: "images/image.png"},
             {from: './app/images/loading.png', to: "images/loading.png"},
             {from: './app/images/logo.svg', to: "images/logo.svg"},
+
+            // badge body
+            {from: './app/assets/body.svg', to: "assets/body.svg"},
+
+            // badge faces
+            {from: './app/assets/face_1.svg', to: "assets/face_1.svg"},
+            {from: './app/assets/face_2.svg', to: "assets/face_2.svg"},
+            {from: './app/assets/face_3.svg', to: "assets/face_3.svg"},
+            {from: './app/assets/face_4.svg', to: "assets/face_4.svg"},
+            {from: './app/assets/face_5.svg', to: "assets/face_5.svg"},
+            {from: './app/assets/face_6.svg', to: "assets/face_6.svg"},
+            {from: './app/assets/face_7.svg', to: "assets/face_7.svg"},
+            {from: './app/assets/face_8.svg', to: "assets/face_8.svg"},
+
+            // badge masks
+            {from: './app/assets/mask_1.svg', to: "assets/mask_1.svg"},
+            {from: './app/assets/mask_2.svg', to: "assets/mask_2.svg"},
+            {from: './app/assets/mask_3.svg', to: "assets/mask_3.svg"},
+            {from: './app/assets/mask_4.svg', to: "assets/mask_4.svg"},
 
             // css
             {from: './app/stylesheets/bootstrap.css', to: "css/bootstrap.css"}
