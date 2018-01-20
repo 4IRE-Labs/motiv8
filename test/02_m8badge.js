@@ -38,9 +38,12 @@ contract('M8BadgeToken', function (accounts) {
     }); 
 
     it("should return badge with correct name", function(){
-        contract.getBadge.call("1").then(badge => {
-            console.log("Badge #1 name: " + badge);
-            assert.equal(badge, "New badge for Tx #1", "Badge name should be equal as previousely created");
+        contract.getBadge.call("1").then(function (badge) {
+            console.log("Badge #1 name: " + badge[0]);
+            console.log("Badge #1 face: " + badge[1]);
+            console.log("Badge #1 mask: " + badge[2]);
+            console.log("Badge #1 color: " + badge[3]);
+            assert.equal(badge[0], "New badge for Tx #1", "Badge name should be equal as previousely created");
         });
     });
 

@@ -12,6 +12,9 @@ contract M8BadgeBase {
     struct M8Badge {
         string donationTransactionId;
         string name;
+        uint face;
+        uint mask;
+        uint color;
     }
 
     M8Badge[] badges; 
@@ -49,7 +52,10 @@ contract M8BadgeBase {
 
         M8Badge memory _badge = M8Badge({
             donationTransactionId: _donationTransactionId,
-            name: _name
+            name: _name,
+            face: uint(keccak256(now))%8,
+            mask: uint(keccak256(now + 1))%4,
+            color: uint(keccak256(now + 2))%20
         });
 
         uint256 newBadgeId = badges.push(_badge) - 1;

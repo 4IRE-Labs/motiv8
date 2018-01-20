@@ -19,10 +19,13 @@ contract M8BadgeToken is M8BadgeOwnership, Ownable {
     }
 
     /// @dev returns badge information
-    function getBadge(uint256 _tokenId) public view returns (string name) {
+    function getBadge(uint256 _tokenId) public view returns (string name, uint face, uint mask, uint color) {
         require(badges.length > _tokenId);
         M8Badge storage badge = badges[_tokenId];
         name = string(badge.name);
+        face = uint(badge.face);
+        mask = uint(badge.mask);
+        color = uint(badge.color);
     }
 
     function addDonationWallet(address wallet) onlyOwner public returns(uint256) {
