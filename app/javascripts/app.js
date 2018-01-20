@@ -30,12 +30,12 @@ window.App = {
         // Get the initial account balance so it can be displayed.
         web3.eth.getAccounts(function (err, accs) {
             if (err != null) {
-                alert("There was an error fetching your accounts.");
+                App.createAndAppendErrorStatus("There was an error fetching your accounts.");
                 return;
             }
 
             if (accs.length == 0) {
-                alert("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+                App.createAndAppendErrorStatus("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
                 return;
             }
 
@@ -44,10 +44,34 @@ window.App = {
         });
     },
 
-    setStatus: function (message) {
-        var status = document.getElementById("status");
+    // Methods to insert info to UI
+
+    setMyAllPoints: function (message) {
+        var status = document.getElementById("myAllPoints");
         status.innerHTML = message;
     },
+
+    setActiveAccountAddress: function (activeAccountAddress) {
+        var accountAddress = document.getElementById("activeAccountAddress")
+        accountAddress.innerHTML = activeAccountAddress
+    },
+
+    createAndAppendErrorStatus: function (message) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
+        div.setAttribute("role", "alert");
+        App.appendStatus(div, message)
+    },
+
+    appendStatus: function (divAlert, message) {
+        divAlert.innerHTML = "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+            "<span aria-hidden=\"true\">&times;</span>\n" +
+            "</button>\n" +
+            "<strong>Hmmm...</strong> " + message;
+
+        document.getElementById("statuses").appendChild(divAlert);
+    },
+
     printImportantInformation: function () {
         ERC20TokenContract.deployed().then(function (instance) {
             var divAddress = document.createElement("div");
@@ -57,75 +81,84 @@ window.App = {
         });
 
         web3.eth.getAccounts(function (err, accs) {
-            web3.eth.getBalance(accs[0], function (err1, balance) {
-                var divAddress = document.createElement("div");
-                var div = document.createElement("div");
-                div.appendChild(document.createTextNode("Active Account: " + accs[0]));
-                var div2 = document.createElement("div");
-                div2.appendChild(document.createTextNode("Balance in Ether: " + web3.fromWei(balance, "ether")));
-                divAddress.appendChild(div);
-                divAddress.appendChild(div2);
-                divAddress.setAttribute("class", "alert alert-info");
-                document.getElementById("importantInformation").appendChild(divAddress);
-            });
+            App.setActiveAccountAddress(accs[0])
 
+            // web3.eth.getBalance(accs[0], function (err1, balance) {
+            //     var divAddress = document.createElement("div");
+            //     var div = document.createElement("div");
+            //     div.appendChild(document.createTextNode("Active Account: " + accs[0]));
+            //     var div2 = document.createElement("div");
+            //     div2.appendChild(document.createTextNode("Balance in Ether: " + web3.fromWei(balance, "ether")));
+            //     divAddress.appendChild(div);
+            //     divAddress.appendChild(div2);
+            //     divAddress.setAttribute("class", "alert alert-info");
+            //     document.getElementById("importantInformation").appendChild(divAddress);
+            // });
         });
     },
 
     /**
-     * TOKEN FUNCTIONS FROM HERE ON
+     * MY ACCOUNT FUNCTIONS FROM HERE ON
      */
-    initManageToken: function () {
-        App.updateTokenBalance();
-        App.watchTokenEvents();
-        App.printImportantInformation();
+    initMyAccount: function () {
+        App.updateAccountPoints();
+        App.updateAccountBadges();
+
+        // App.watchTokenEvents();
+        // App.printImportantInformation();
     },
-    updateTokenBalance: function () {
+    updateAccountPoints: function () {
         var tokenInstance;
         ERC20TokenContract.deployed().then(function (instance) {
             tokenInstance = instance;
             return tokenInstance.balanceOf.call(account);
         }).then(function (value) {
             console.log(value);
-            var balance_element = document.getElementById("balanceTokenInToken");
-            balance_element.innerHTML = value.valueOf();
+            App.setMyAllPoints(value.valueOf())
         }).catch(function (e) {
             console.log(e);
-            App.setStatus("Error getting balance; see log.");
+            App.createAndAppendErrorStatus("Error getting points balance; see log.")
         });
     },
-    watchTokenEvents: function () {
-        var tokenInstance;
-        ERC20TokenContract.deployed().then(function (instance) {
-            tokenInstance = instance;
-            tokenInstance.allEvents({}, {fromBlock: 0, toBlock: 'latest'}).watch(function (error, result) {
-                var alertbox = document.createElement("div");
-                alertbox.setAttribute("class", "alert alert-info  alert-dismissible");
-                var closeBtn = document.createElement("button");
-                closeBtn.setAttribute("type", "button");
-                closeBtn.setAttribute("class", "close");
-                closeBtn.setAttribute("data-dismiss", "alert");
-                closeBtn.innerHTML = "<span>&times;</span>";
-                alertbox.appendChild(closeBtn);
+    updateAccountBadges: function () {
 
-                var eventTitle = document.createElement("div");
-                eventTitle.innerHTML = '<strong>New Event: ' + result.event + '</strong>';
-                alertbox.appendChild(eventTitle);
+    },
 
 
-                var argsBox = document.createElement("textarea");
-                argsBox.setAttribute("class", "form-control");
-                argsBox.innerText = JSON.stringify(result.args);
-                alertbox.appendChild(argsBox);
-                document.getElementById("tokenEvents").appendChild(alertbox);
-                //document.getElementById("tokenEvents").innerHTML += '<div class="alert alert-info  alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div></div><div>Args: '+JSON.stringify(result.args) + '</div></div>';
 
-            });
-        }).catch(function (e) {
-            console.log(e);
-            App.setStatus("Error getting balance; see log.");
-        });
-    }
+
+    // watchTokenEvents: function () {
+    //     var tokenInstance;
+    //     ERC20TokenContract.deployed().then(function (instance) {
+    //         tokenInstance = instance;
+    //         tokenInstance.allEvents({}, {fromBlock: 0, toBlock: 'latest'}).watch(function (error, result) {
+    //             var alertbox = document.createElement("div");
+    //             alertbox.setAttribute("class", "alert alert-info  alert-dismissible");
+    //             var closeBtn = document.createElement("button");
+    //             closeBtn.setAttribute("type", "button");
+    //             closeBtn.setAttribute("class", "close");
+    //             closeBtn.setAttribute("data-dismiss", "alert");
+    //             closeBtn.innerHTML = "<span>&times;</span>";
+    //             alertbox.appendChild(closeBtn);
+    //
+    //             var eventTitle = document.createElement("div");
+    //             eventTitle.innerHTML = '<strong>New Event: ' + result.event + '</strong>';
+    //             alertbox.appendChild(eventTitle);
+    //
+    //
+    //             var argsBox = document.createElement("textarea");
+    //             argsBox.setAttribute("class", "form-control");
+    //             argsBox.innerText = JSON.stringify(result.args);
+    //             alertbox.appendChild(argsBox);
+    //             document.getElementById("tokenEvents").appendChild(alertbox);
+    //             //document.getElementById("tokenEvents").innerHTML += '<div class="alert alert-info  alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div></div><div>Args: '+JSON.stringify(result.args) + '</div></div>';
+    //
+    //         });
+    //     }).catch(function (e) {
+    //         console.log(e);
+    //         App.setStatus("Error getting balance; see log.");
+    //     });
+    // }
 };
 
 window.addEventListener('load', function () {
