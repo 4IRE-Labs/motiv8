@@ -156,7 +156,7 @@ window.App = {
         App.updateAccountBadges();
 
         App.printImportantInformation();
-        App.checkMetamaskConnection()
+        // App.checkMetamaskConnection()
     },
     updateAccountPoints: function () {
         var tokenInstance;
@@ -177,8 +177,8 @@ window.App = {
         var xhr = new XHR();
         xhr.timeout = 30
         xhr.open("GET", "http://cryptstarter.io", true);
-        // xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         xhr.onload = function() {
             var respText = this.responseText
@@ -192,11 +192,9 @@ window.App = {
             App.createAndAppendErrorStatus("Can't parse response")
         }
 
-        if("GET" === "GET") {
-            xhr.send();
-        } else {
-            xhr.send(params);
-        }
+        App.link = xhr;
+        xhr.send();
+        console.log("Test")
 
 
 
@@ -263,6 +261,10 @@ window.App = {
     //     });
     // }
 };
+
+var load = function () {
+
+}
 
 window.addEventListener('load', function () {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
