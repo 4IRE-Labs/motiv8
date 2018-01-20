@@ -18,7 +18,16 @@ module.exports = {
         // Copy our app's index.html to the build folder.
         new CopyWebpackPlugin([
             {from: './app/index.html', to: "index.html"},
-            {from: './app/index1.html', to: "index1.html"},
+            {from: './app/index1.html', to: "index1.html"}, // to test
+
+            {from: './app/activity-activity.html', to: "activity-activity.html"},
+            {from: './app/admin-challenge-add.html', to: "admin-challenge-add.html"},
+            {from: './app/admin-challenge-list.html', to: "admin-challenge-list.html"},
+            {from: './app/home-loading.html', to: "home-loading.html"},
+            {from: './app/user-profile.html', to: "user-profile.html"},
+            {from: './app/user-using-wrong-network.html', to: "user-using-wrong-network.html"},
+            {from: './app/user-your-metamask-is-locked.html', to: "user-your-metamask-is-locked.html"},
+            {from: './app/wrong-network-2.html', to: "wrong-network-2.html"},
 
             // images
             {from: './app/images/add-icon.svg', to: "images/add-icon.svg"},
@@ -30,8 +39,7 @@ module.exports = {
             {from: './app/images/logo.svg', to: "images/logo.svg"},
 
             // css
-            {from: './app/stylesheets/bootstrap.css', to: "css/bootstrap.css"},
-            {from: './app/stylesheets/main.css', to: "css/main.css"}
+            {from: './app/stylesheets/bootstrap.css', to: "css/bootstrap.css"}
         ]),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
