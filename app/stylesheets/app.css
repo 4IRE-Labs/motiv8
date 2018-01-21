@@ -1,5 +1,5 @@
 html, body {
-	height: 100%;
+  height: 100%;
   font-family: 'Poppins', 'Roboto', 'Arial', sans-serif;
   font-size: 15px;
   background-color: #f8f9fa;
@@ -7,7 +7,6 @@ html, body {
 
 .page {
 	height: 100%;
-	overflow: auto;
 }
 
 header {
@@ -24,6 +23,7 @@ header {
 }
 
 .card {
+	margin-bottom: 10px;
 	box-shadow: 0 0 10px rgba(39, 36, 128, 0.15);
 }
 
