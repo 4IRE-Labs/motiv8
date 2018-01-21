@@ -190,7 +190,7 @@ window.App = {
 
                     for (var index in allBadgeChallenges) {
                         var challange = allBadgeChallenges[index];
-                        if (challange["address"] == badge[0]) {
+                        if (challange["address"].toLowerCase() == badge[0].toLowerCase()) {
                             found["address"] = challange["address"];
                             found["title"] = challange["title"];
                             found["description"] = challange["description"];
