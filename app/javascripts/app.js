@@ -188,8 +188,9 @@ window.App = {
                         }
                     };
 
-                    for (var challange in allBadgeChallenges) {
-                        if (challange["id"] == badge[0]) {
+                    for (var index in allBadgeChallenges) {
+                        var challange = allBadgeChallenges[index];
+                        if (challange["address"] == badge[0]) {
                             found["address"] = challange["address"];
                             found["title"] = challange["title"];
                             found["description"] = challange["description"];
