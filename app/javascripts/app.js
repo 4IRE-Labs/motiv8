@@ -308,7 +308,7 @@ window.App = {
     claimBadge: function (challengeId) {
         console.log("----------" + challengeId)
 
-        $.post( hostUrl+"/api/v1/challenges/"+web3.toHex(challengeId)+"/claim", {  "challenge[user_address]": account })
+        $.post( hostUrl+"/api/v1/challenges/" + challengeId + "/claim", {  "challenge[user_address]": account })
         .done(function() {
             App.createAndAppendSuccStatus("Request to claim the badge was successfully sent")
         })
@@ -412,11 +412,16 @@ window.App = {
         p.innerText = challenge.description;
         divCardBody.appendChild(p);
 
+        var p2 = document.createElement("p");
+        p2.setAttribute("class", "card-text text-secondary");
+        p2.innerHTML = "<strong>Address:</strong> " + challenge.address;
+        divCardBody.appendChild(p2);
+
         var button = document.createElement("button");
         button.setAttribute("type", "button");
         button.setAttribute("class", "btn btn-success");
         button.innerText = "Claim";
-        button.setAttribute("onclick", "App.claimBadge("+ new web3.BigNumber(challenge.address) +");return false;");
+        button.setAttribute("onclick", "App.claimBadge("+ challenge.id +");return false;");
         divCardBody.appendChild(button);
 
         return div
