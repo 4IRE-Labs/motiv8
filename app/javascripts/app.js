@@ -10,9 +10,11 @@ import { default as contract } from 'truffle-contract'
 
 // Import our contract artifacts and turn them into usable abstractions.
 import erc20_token_artifacts from '../../build/contracts/Motiv8ERC20Token.json'
+import m8BadgeToken_artifacts from '../../build/contracts/M8BadgeToken.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
 var ERC20TokenContract = contract(erc20_token_artifacts);
+var M8BadgeToken = contract(m8BadgeToken_artifacts);
 
 // The following code is simple to show off interacting with your contracts.
 // As your needs grow you will likely need to change its form and structure.
@@ -20,6 +22,8 @@ var ERC20TokenContract = contract(erc20_token_artifacts);
 var accounts;
 var account;
 var hostUrl = "http://cryptstarter.io";
+var allBadgeChallenges;
+var allPointsChallenges;
 var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
 
 var ChallengeType = { badge: 0, points: 1 }
@@ -30,6 +34,7 @@ window.App = {
 
         // Bootstrap the MetaCoin abstraction for Use.
         ERC20TokenContract.setProvider(web3.currentProvider);
+        M8BadgeToken.setProvider(web3.currentProvider);
 
         // Get the initial account balance so it can be displayed.
         web3.eth.getAccounts(function (err, accs) {
@@ -57,29 +62,29 @@ window.App = {
     },
 
     setActiveAccountAddress: function (activeAccountAddress) {
-        var accountAddress = document.getElementById("activeAccountAddress")
-        accountAddress.innerHTML = "Account: " + activeAccountAddress
+        var accountAddress = document.getElementById("activeAccountAddress");
+        accountAddress.innerHTML = "Account: " + activeAccountAddress;
     },
 
     createAndAppendErrorStatus: function (message) {
         var div = document.createElement("div");
         div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
         div.setAttribute("role", "alert");
-        App.appendStatus(div, message)
+        App.appendStatus(div, "Hmm...", message);
     },
 
     createAndAppendSuccStatus: function (message) {
         var div = document.createElement("div");
         div.setAttribute("class", "alert alert-success alert-dismissible fade show");
         div.setAttribute("role", "alert");
-        App.appendStatus(div, message)
+        App.appendStatus(div, "OK", message);
     },
 
-    appendStatus: function (divAlert, message) {
+    appendStatus: function (divAlert, title, message) {
         divAlert.innerHTML = "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
             "<span aria-hidden=\"true\">&times;</span>\n" +
             "</button>\n" +
-            "<strong>Hmmm...</strong> " + message;
+            "<strong>" + title + "</strong> " + message;
 
         document.getElementById("statuses").appendChild(divAlert);
     },
@@ -90,10 +95,12 @@ window.App = {
         });
     },
 
-    checkMetamaskConnection: function () {
+    checkMetamaskConnection: function (callBackSucc) {
         web3.eth.getAccounts(function (err, accs) {
             if (err != undefined || accs.length == 0) {
                 window.location.replace("/user-using-wrong-network.html");
+            } else {
+                callBackSucc(accs[0]);
             }
         });
     },
@@ -102,12 +109,11 @@ window.App = {
      * MY ACCOUNT FUNCTIONS FROM HERE ON
      */
     initMyAccount: function () {
-        App.printImportantInformation();
-        App.updateAccountPoints();
-        App.updateAccountBadges();
-
-        App.checkMetamaskConnection();
-        App.loadAccountChallenges();
+        App.checkMetamaskConnection(function (account) {
+            App.printImportantInformation();
+            App.updateAccountPoints();
+            App.loadAccountChallenges(account);
+        });
     },
     updateAccountPoints: function () {
         var tokenInstance;
@@ -123,53 +129,123 @@ window.App = {
         });
     },
 
-    loadAccountChallenges: function () {
-        $.get( hostUrl+"/api/v1/wallets")
-        .done(function(challenges) {
-            App.createAndAppendSuccStatus("loadAllChallenges: " + JSON.stringify(challenges) );
+    /* Start of loading account badges */
 
-            App.showGeneralPointsChallenges(App.filterChallenges(challenges, ChallengeType.points));
-            App.showGeneralBadgeChallenges(App.filterChallenges(challenges, ChallengeType.badge));
+    loadAccountChallenges: function (account) {
+        App.loadAllChallenges(function (allChallenges) {
+            var tokenInstance;
+            M8BadgeToken.deployed().then(function (instance) {
+                tokenInstance = instance;
+                return tokenInstance.tokensOfOwner.call(account);
+            }).then(function (tokensIds) {
+                App.createAndAppendSuccStatus("loadAccountChallengesIds: " + JSON.stringify(tokensIds));
+                return App.loadBadgesByIdsPromise(tokensIds, tokenInstance);
+            }).then(function(badges) {
+                App.createAndAppendSuccStatus("loadAccountChallengesBadges: " + JSON.stringify(badges));
+                // var accountChallenges = App.generateChallengesWithFullfiledBadges(badges);
+                var accountChallenges = [{"id":14,
+                    "address": "0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e",
+                    "title":"TEst",
+                    "description":" kadfk ahf sjhfkjas lfdsflaskf ",
+                    "reward_type":0,
+                    "created_at":"2018-01-21T07:41:13.459Z",
+                    "updated_at":"2018-01-21T07:41:13.459Z",
+                    badge: {
+                        challenge: "14",
+                        face: 2,
+                        mask: 4,
+                        color: 4,
+                        txHash: 35
+                    }}]
+
+                App.showGeneralBadgeChallenges(accountChallenges, App.createAccountBadgeChallengeTR);
+                App.drawBadges(badges);
+
+            }).catch(function (e) {
+                App.createAndAppendErrorStatus(e.message)
+            });
         })
-        .fail(function(error) {
-            App.createAndAppendErrorStatus(JSON.stringify(error))
+    },
+    
+    loadBadgesByIdsPromise: function (ids, tokenInstance) {
+        ids.map(function (id) {
+            return tokenInstance.getBadge.call(id);
+        })
+        return Promise.all(ids)
+    },
+
+    generateChallengesWithFullfiledBadges: function (badges) {
+        return badges.map(function (badge) {
+            var challenge = App.findChallengeForBadge(badge);
+            challenge.badge = badge;
+        }).filter(function (challenge) {
+            return challenge != undefined;
         })
     },
 
-    createAccountPointChallengeTR: function (challenge) {
-        var tr = document.createElement("tr");
-
-        var fTd = document.createElement("td");
-        fTd.setAttribute("scope", "row");
-        fTd.innerText = new Date(challenge.created_at).toDateString();
-
-        var sTd = document.createElement("td");
-        sTd.innerText = challenge.title;
-
-        var tTd = document.createElement("td");
-        tTd.setAttribute("class", "text-right");
-        tTd.innerText = challenge.address;
-
-        tr.appendChild(fTd);
-        tr.appendChild(sTd);
-        tr.appendChild(tTd);
-        return tr;
+    findChallengeForBadge: function (badge) {
+        return allBadgeChallenges.find(function (challenge) {
+            return challenge.id.toString() == badge.challenge;
+        })
     },
 
     createAccountBadgeChallengeTR: function (challenge) {
+        var badge = challenge.badge
+        var canvasId = "canvas_"+badge.face+"_"+badge.mask+"_"+badge.color;
+        var canvas = document.createElement("canvas");
+        canvas.setAttribute("id", canvasId);
+        canvas.setAttribute("width", 100);
+        canvas.setAttribute("height", 100);
+        // document.body.appendChild(canvas);
+
+
         var div = document.createElement("div");
         div.setAttribute("class", "col-sm-4");
-        div.innerHTML =
-            '<div class="card pt-4">' +
-            '<img class="card-img mx-auto" src="images/card-img-1.svg" alt="card image">' +
-            '<div class="card-body">' +
-            '<h5 class="card-title text-uppercase text-secondary">' + challenge.title + '</h5>' +
-            '<p class="card-text text-secondary">'+challenge.description+'</p>' +
-            '</div>' +
-            '</div>';
+
+        var divCard = document.createElement("div");
+        divCard.setAttribute("class", "card pt-4");
+        divCard.appendChild(canvas);
+        div.appendChild(divCard);
+
+        var divCardBody = document.createElement("div");
+        divCardBody.setAttribute("class", "card-body");
+        divCard.appendChild(divCardBody);
+
+        var h5 = document.createElement("h5");
+        h5.setAttribute("class", "card-title text-uppercase text-secondary");
+        h5.innerText = challenge.title;
+        divCardBody.appendChild(h5);
+
+        var p = document.createElement("p");
+        p.setAttribute("class", "card-text text-secondary");
+        p.innerText = challenge.description;
+        divCardBody.appendChild(p);
+
+
+        // div.innerHTML =
+            // '<div class="card pt-4">' +
+            // '<img class="card-img mx-auto" src="images/card-img-1.svg" alt="card image">' +
+            // '<div class="card-body">' +
+            // '<h5 class="card-title text-uppercase text-secondary">' +  + '</h5>' +
+            // '<p class="card-text text-secondary">'+challenge.description+'</p>' +
+            // '</div>' +
+            // '</div>';
         return div
     },
 
+    drawBadges: function (badges) {
+        badges.forEach(function (badge) {
+            var canvasId = "canvas_"+badge.face+"_"+badge.mask+"_"+badge.color;
+            Badge.drawBadge({
+                canvasId: canvasId,
+                face: badge.face,
+                mask: badge.mask,
+                color: badge.color
+            });
+        })
+    },
+
+    /* End of loading account badges */
 
 
     claimBadge: function (event) {
@@ -189,16 +265,19 @@ window.App = {
      */
     initHome: function () {
         App.printImportantInformation();
-        App.loadAllChallenges()
+        App.loadAllChallenges(function (challenges) {
+            App.showGeneralPointsChallenges(allPointsChallenges, App.createGeneralPointChallengeTR);
+            App.showGeneralBadgeChallenges(allBadgeChallenges, App.createGeneralBadgeChallengeTR);
+        })
     },
 
-    loadAllChallenges: function () {
+    loadAllChallenges: function (callback) {
         $.get( hostUrl+"/api/v1/wallets")
         .done(function(challenges) {
             App.createAndAppendSuccStatus("loadAllChallenges: " + JSON.stringify(challenges) );
-
-            App.showGeneralPointsChallenges(App.filterChallenges(challenges, ChallengeType.points), App.createGeneralPointChallengeTR);
-            App.showGeneralBadgeChallenges(App.filterChallenges(challenges, ChallengeType.badge), App.createGeneralBadgeChallengeTR);
+            allBadgeChallenges = App.filterChallenges(challenges, ChallengeType.badge);
+            allPointsChallenges = App.filterChallenges(challenges, ChallengeType.points);
+            callback(challenges)
         })
         .fail(function(error) {
             App.createAndAppendErrorStatus(JSON.stringify(error))
