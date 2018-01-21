@@ -263,18 +263,16 @@ window.App = {
     /* End of loading account badges */
 
 
-    claimBadge: function (event) {
-        var challengeId = event.target.getAttribute('dataChallengeId');
+    claimBadge: function (challengeId) {
         console.log("----------" + challengeId)
-        // var target = event.target
-        //
-        // $.post( hostUrl+"/api/v1/wallets/check-donation", {  address: testAccount })
-        // .done(function(data) {
-        //     App.createAndAppendSuccStatus("updateAccountBadges: " + JSON.stringify(data) )
-        // })
-        // .fail(function(error) {
-        //     App.createAndAppendErrorStatus(JSON.stringify(error))
-        // })
+
+        $.post( hostUrl+"/api/v1//challenges/"+challengeId+"/claim", {  "challenge[user_address]": account })
+        .done(function() {
+            App.createAndAppendSuccStatus("Request to claim the badge was successfully sent")
+        })
+        .fail(function(error) {
+            App.createAndAppendErrorStatus(JSON.stringify(error))
+        })
     },
 
     /**
@@ -373,23 +371,9 @@ window.App = {
         button.setAttribute("type", "button");
         button.setAttribute("class", "btn btn-success");
         button.innerText = "Claim";
-        button.setAttribute("dataChallengeId", challenge.id);
-        button.setAttribute("onclick", "App.claimBadge();return false;");
+        button.setAttribute("onclick", "App.claimBadge("+ challenge.id +");return false;");
         divCardBody.appendChild(button);
 
-
-
-        // var div = document.createElement("div");
-        // div.setAttribute("class", "col-sm-4");
-        // div.innerHTML =
-        //     '<div class="card pt-4">' +
-        //
-        //     '<div class="card-body">' +
-        //     '<h5 class="card-title text-uppercase text-secondary">' + challenge.title + '</h5>' +
-        //     '<p class="card-text text-secondary">'+challenge.description+'</p>' +
-        //     '<button type="button" class="" onclick="App.claimBadge(\'' + challenge + '\');return false;">Claim</button>'
-        //     '</div>' +
-        //     '</div>';
         return div
     },
 
