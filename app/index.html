@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>User profile</title>
+    <title>All challenges</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="mobile-web-app-capable" content="yes"/>
     <meta name="format-detection" content="telephone=no"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
@@ -28,15 +29,14 @@
             <li class="nav-item">
               <a class="nav-link" href="#" id="activeAccountAddress"></a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link active" href="#">Chalenges</a>
+              <a class="nav-link active" href="/index.html">Chalenges</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/">My profile</a>
+              <a class="nav-link" href="/user-profile.html">My profile</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Activity</a>
+            <li class="nav-item" style="display:none" id="addNewChallenge">
+              <a class="nav-link" href="/admin-challenge-add.html">Add new challenge</a>
             </li>
           </ul>
         </div>
@@ -47,32 +47,20 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col" class="py-4" colspan="3">My points</th>
-                <th scope="col" class="py-4 text-right" id="myAllPoints">Loading...</th>
+                <th scope="col" class="py-4" colspan="3">Point Challenges</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="pointsChallenges">
               <tr>
-                <td scope="row">2017-12-31 23:59</td>
-                <td>Challenge ID</td>
-                <td class="text-right">100pts</td>
-                <td class="text-right">
-                  <button type="button" class="btn btn-success" onclick="App.updateAccountBadges();return false;">Claim</button>
-                </td>
-              </tr>
-              <tr>
-                <td scope="row">2017-12-31 23:59</td>
-                <td>Challenge ID</td>
-                <td class="text-right">100pts</td>
-                <td class="text-right">
-                  <button type="button" class="btn btn-secondary" disabled>Claim</button>
-                </td>
+                <td scope="row"><strong>Created at</strong></td>
+                <td><strong>Title</strong></td>
+                <td class="text-right"><strong>Receiver Address</strong></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <h4>My badges</h4>
-        <div class="row mt-3" id="allChallengesContainer">
+        <h4>Badges Challenges</h4>
+        <div class="row mt-3" id="allBadgeChallengesContainer">
 
           <!--<div class="col-sm-4">-->
             <!--<div class="card pt-4">-->
@@ -101,7 +89,7 @@
 
   <script type="text/javascript">
     window.addEventListener('load', function () {
-        App.initMyAccount();
+        App.initHome();
     });
   </script>
 

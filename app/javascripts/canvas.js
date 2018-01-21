@@ -1,25 +1,25 @@
-window.addEventListener('load', function () {
-    Badge.drawBadge({
-        canvasId: "canvas 1",
-        face: 1,
-        mask: 2,
-        color: 3
-    });
-
-    Badge.drawBadge({
-        canvasId: "canvas 2",
-        face: 2,
-        mask: 3,
-        color: 2
-    });
-
-    Badge.drawBadge({
-        canvasId: "canvas 3",
-        face: 7,
-        mask: 1,
-        color: 4
-    });
-});
+// window.addEventListener('load', function () {
+//     Badge.drawBadge({
+//         canvasId: "canvas 1",
+//         face: 1,
+//         mask: 2,
+//         color: 3
+//     });
+//
+//     Badge.drawBadge({
+//         canvasId: "canvas 2",
+//         face: 2,
+//         mask: 3,
+//         color: 2
+//     });
+//
+//     Badge.drawBadge({
+//         canvasId: "canvas 3",
+//         face: 7,
+//         mask: 1,
+//         color: 4
+//     });
+// });
 
 window.Badge = {
     colors: [

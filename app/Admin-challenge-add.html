@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="mobile-web-app-capable" content="yes"/>
     <meta name="format-detection" content="telephone=no"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
@@ -15,6 +16,8 @@
   </head>
   <body>
     <div class="page container bg-light">
+
+
       <header class="row bg-white px-4">
         <div class="col col-lg-2">
           <div >
@@ -26,25 +29,33 @@
         <div class="col justify-content-md-end">
           <ul class="nav justify-content-end">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Chalenges</a>
+              <a class="nav-link" href="#" id="activeAccountAddress"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Stats</a>
+              <a class="nav-link active" href="/index.html">Chalenges</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/user-profile.html">My profile</a>
+            </li>
+            <li class="nav-item" style="display:none" id="addNewChallenge">
+              <a class="nav-link" href="/admin-challenge-add.html">Add new challenge</a>
             </li>
           </ul>
         </div>
       </header>
+
       <div class="bg-light py-5">
+        <div id="statuses"></div>
         <form>
           <div class="p-5 bg-white box-shadow text-secondary br-5">
             <h6 class="text-uppercase mb-4">NEW CHALLENGE</h6>
             <div class="form-group">
-              <label for="exampleInputPassword1">Title</label>
-              <input type="password" class="form-control" id="exampleInput1" placeholder="Title">
+              <label for="inputTitle">Title</label>
+              <input type="text" class="form-control" id="inputTitle" placeholder="Title">
             </div>
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Description</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <label for="descriptionTextarea">Description</label>
+              <textarea class="form-control" id="descriptionTextarea" rows="3"></textarea>
             </div>
             <div class="radio-group mb-4">
               <h6>Reward</h6>
@@ -57,21 +68,21 @@
                 <label class="form-check-label" for="inlineRadio2">Points</label>
               </div>
             </div>
-            <div class="input-group mb-3 add-file">
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile02">
-                <label class="custom-file-label" for="inputGroupFile02">Browse</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Supply</label>
-              <input type="password" class="form-control" id="exampleInput2" placeholder="Supply">
-            </div>
+            <!--<div class="input-group mb-3 add-file">-->
+              <!--<div class="custom-file">-->
+                <!--<input type="file" class="custom-file-input" id="inputGroupFile02">-->
+                <!--<label class="custom-file-label" for="inputGroupFile02">Browse</label>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+              <!--<label for="exampleInputPassword1">Supply</label>-->
+              <!--<input type="password" class="form-control" id="exampleInput2" placeholder="Supply">-->
+            <!--</div>-->
             <div class="form-group mb-4">
-              <label for="exampleInputPassword1">Wallet</label>
-              <input type="password" class="form-control" id="exampleInput3" placeholder="Wallet">
+              <label for="inputWallet">Wallet</label>
+              <input type="text" class="form-control" id="inputWallet" placeholder="Wallet">
             </div>
-            <button type="button" class="btn btn-secondary">Submit</button>
+            <button type="button" class="btn btn-secondary" onclick="App.createNewChallenge();return false;">Submit</button>
             <button type="button" class="btn btn-outline-secondary">Cancel</button>
           </div>
         </form>

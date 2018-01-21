@@ -8,12 +8,13 @@
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="mobile-web-app-capable" content="yes"/>
     <meta name="format-detection" content="telephone=no"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
     <script src="./app.js"></script>
   </head>
-  <body>  
+  <body>
     <div class="page">
       <header class="row bg-white px-4">
         <div class="col  col-lg-2">
@@ -26,24 +27,28 @@
         <div class="col justify-content-md-end">
           <ul class="nav justify-content-end">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Chalenges</a>
+              <a class="nav-link" href="#" id="activeAccountAddress"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">My profile</a>
+              <a class="nav-link active" href="/index.html">Chalenges</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Activity</a>
+              <a class="nav-link" href="/user-profile.html">My profile</a>
+            </li>
+            <li class="nav-item" style="display:none" id="addNewChallenge">
+              <a class="nav-link" href="/admin-challenge-add.html">Add new challenge</a>
             </li>
           </ul>
         </div>
       </header>
       <div class="container bg-light py-5">
+        <div id="statuses"></div>
         <div class="card p-3 mb-5">
           <table class="table">
             <thead>
               <tr>
                 <th scope="col" class="py-4" colspan="3">My points</th>
-                <th scope="col" class="py-4 text-right">300</th>
+                <th scope="col" class="py-4 text-right" id="myAllPoints">Loading...</th>
               </tr>
             </thead>
             <tbody>
@@ -52,7 +57,7 @@
                 <td>Challenge ID</td>
                 <td class="text-right">100pts</td>
                 <td class="text-right">
-                  <button type="button" class="btn btn-success">Claim</button>
+                  <button type="button" class="btn btn-success" onclick="App.updateAccountBadges();return false;">Claim</button>
                 </td>
               </tr>
               <tr>
@@ -67,7 +72,8 @@
           </table>
         </div>
         <h4>My badges</h4>
-        <div class="row mt-3">
+        <div class="row mt-3" id="allChallengesContainer">
+
           <div class="col-sm-4">
             <div class="card pt-4">
               <img class="card-img mx-auto" src="images/card-img-1.svg" alt="card image">
@@ -88,8 +94,16 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function () {
+        App.initMyAccount();
+    });
+  </script>
+
   </body>
 </html>  

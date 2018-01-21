@@ -19,61 +19,10 @@ var ERC20TokenContract = contract(erc20_token_artifacts);
 // For application bootstrapping, check out window.addEventListener below.
 var accounts;
 var account;
-var httpRequestBuilder = new HttpRequestBuilder("http://cryptstarter.io", 30);
+var hostUrl = "http://cryptstarter.io";
+var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
 
-
-function HttpRequestBuilder(host, timeout) {
-  if (!(this instanceof HttpRequestBuilder)) {
-    throw new Error('the HttpRequestBuilder instance requires the "new" flag in order to function normally.');
-  }
-  if (host == undefined) {
-    throw new Error('[ethjs-provider-http] the HttpProvider instance requires that the host be specified');
-  }
-
-  this.host = host;
-  this.timeout = timeout || 30;
-}
-
-/**
- * Should be used to make async request
- *
- * @method sendAsync
- * @param {Object} payload
- * @param {Function} callback triggered on end with (err, result)
- */
-HttpRequestBuilder.prototype.sendAsync = function (method, path, params) {
-    var self = this;
-
-    return new Promise(function(resolve, reject) {
-        // eslint-disable-line
-
-        var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
-        var xhr = new XHR();
-        xhr.timeout = self.timeout
-        xhr.open(method, self.host + path, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        xhr.onload = function() {
-            var respText = this.responseText
-            try {
-                resolve(JSON.parse(respText))
-            } catch (jsonError) {
-                reject("Can't parse response")
-            }
-        }
-        xhr.onerror = function() {
-            reject("Some error, try again")
-        }
-
-        if(method === "GET") {
-            xhr.send();
-        } else {
-            xhr.send(params);
-        }
-    });
-};
-
+var ChallengeType = { badge: 0, points: 1 }
 
 window.App = {
     start: function () {
@@ -96,6 +45,7 @@ window.App = {
 
             accounts = accs;
             account = accounts[0];
+            App.configureAdminMenu(account)
         });
     },
 
@@ -136,7 +86,7 @@ window.App = {
 
     printImportantInformation: function () {
         web3.eth.getAccounts(function (err, accs) {
-            App.setActiveAccountAddress(accs[0])
+            App.setActiveAccountAddress(accs[0]);
         });
     },
 
@@ -152,11 +102,11 @@ window.App = {
      * MY ACCOUNT FUNCTIONS FROM HERE ON
      */
     initMyAccount: function () {
+        App.printImportantInformation();
         App.updateAccountPoints();
         App.updateAccountBadges();
 
-        App.printImportantInformation();
-        // App.checkMetamaskConnection()
+        App.checkMetamaskConnection()
     },
     updateAccountPoints: function () {
         var tokenInstance;
@@ -172,60 +122,140 @@ window.App = {
         });
     },
     updateAccountBadges: function () {
-
-        var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
-        var xhr = new XHR();
-        xhr.timeout = 30
-        xhr.open("GET", "http://cryptstarter.io", true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        xhr.onload = function() {
-            var respText = this.responseText
-            try {
-                App.createAndAppendSuccStatus("updateAccountBadges" + JSON.stringify(JSON.parse(respText)))
-            } catch (jsonError) {
-                App.createAndAppendErrorStatus("Can't parse response")
-            }
-        }
-        xhr.onerror = function() {
-            App.createAndAppendErrorStatus("Can't parse response")
-        }
-
-        App.link = xhr;
-        xhr.send();
-        console.log("Test")
-
-
-
-
-        // App.loadAccountBadgesPromise().then(function (badges) {
-        //     App.createAndAppendSuccStatus("updateAccountBadges" + JSON.stringify(badges))
-        //
-        // }, function(error) {
-        //     App.createAndAppendErrorStatus(error)
-        // })
-    },
-
-    loadAccountBadgesPromise: function () {
-        return httpRequestBuilder.sendAsync("GET", "").then(function (badges) {
-            App.createAndAppendSuccStatus("loadAccountBadgesPromise" + JSON.stringify(badges))
-        }, function (error) {
-            App.createAndAppendErrorStatus(error)
+        $.post( hostUrl+"/api/v1/wallets/check-donation", {  address: testAccount })
+        .done(function(data) {
+            App.createAndAppendSuccStatus("updateAccountBadges: " + JSON.stringify(data) )
+        })
+        .fail(function(error) {
+            App.createAndAppendErrorStatus(JSON.stringify(error))
         })
     },
 
     claimBadge: function (budgeId) {
-        App.createAndAppendSuccStatus("budgeId" + budgeId);
-        var params = "budgeId&" + budgeId
-        httpRequestBuilder.sendAsync("POST", "", params).then(function (result) {
-            App.createAndAppendSuccStatus("claimBadge" + result);
-        }, function (error) {
-            App.createAndAppendErrorStatus(error)
+
+    },
+
+    /**
+     * HOME FUNCTIONS FROM HERE ON
+     */
+    initHome: function () {
+        App.printImportantInformation();
+        App.loadAllChallenges()
+    },
+
+    loadAllChallenges: function () {
+        $.get( hostUrl+"/api/v1/wallets")
+        .done(function(challenges) {
+            App.createAndAppendSuccStatus("loadAllChallenges: " + JSON.stringify(challenges) );
+
+            App.showGeneralPointsChallenges(App.filterChallenges(challenges, ChallengeType.points));
+            App.showGeneralBadgeChallenges(App.filterChallenges(challenges, ChallengeType.badge));
         })
+        .fail(function(error) {
+            App.createAndAppendErrorStatus(JSON.stringify(error))
+        })
+    },
+
+    filterChallenges: function (allChallenges, type) {
+        return allChallenges.filter(function (challenge) {
+            return challenge.reward_type == type
+        })
+    },
+
+    showGeneralPointsChallenges: function (pointsChallenges) {
+        var pointsChallengesElem = document.getElementById("pointsChallenges")
+        pointsChallenges.forEach(function (challenge) {
+            pointsChallengesElem.appendChild(App.createGeneralPointChallengeTR(challenge))
+        })
+    },
+
+    showGeneralBadgeChallenges: function (badgeChallenges) {
+        var pointsChallengesElem = document.getElementById("allBadgeChallengesContainer")
+        badgeChallenges.forEach(function (challenge) {
+            pointsChallengesElem.appendChild(App.createGeneralBadgeChallengeTR(challenge))
+        })
+    },
+
+    createGeneralPointChallengeTR: function (challenge) {
+        var tr = document.createElement("tr");
+
+        var fTd = document.createElement("td");
+        fTd.setAttribute("scope", "row");
+        fTd.innerText = new Date(challenge.created_at).toDateString();
+
+        var sTd = document.createElement("td");
+        sTd.innerText = challenge.title;
+
+        var tTd = document.createElement("td");
+        tTd.setAttribute("class", "text-right");
+        tTd.innerText = challenge.address;
+
+        tr.appendChild(fTd);
+        tr.appendChild(sTd);
+        tr.appendChild(tTd);
+        return tr;
+    },
+
+    createGeneralBadgeChallengeTR: function (challenge) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "col-sm-4");
+        div.innerHTML =
+            '<div class="card pt-4">' +
+            '<img class="card-img mx-auto" src="images/card-img-1.svg" alt="card image">' +
+            '<div class="card-body">' +
+            '<h5 class="card-title text-uppercase text-secondary">' + challenge.title + '</h5>' +
+            '<p class="card-text text-secondary">'+challenge.description+'</p>' +
+            '</div>' +
+            '</div>';
+        return div
+    },
+
+
+    /**
+     * ADMIN FUNCTIONS FROM HERE ON
+     */
+
+    createNewChallenge: function () {
+        var title = document.getElementById("inputTitle");
+        var description = document.getElementById("descriptionTextarea");
+
+        var badgeRation = document.getElementById("inlineRadio1");
+        // var pointsRation = document.getElementById("inlineRadio2");
+
+        var wallet = document.getElementById("inputWallet");
+
+        var params = {}
+        params["wallet[title]"] = title.value;
+        params["wallet[description]"] = description.value;
+        params["wallet[address]"] = wallet.value;
+        params["wallet[reward_type]"] = badgeRation.checked == true ? ChallengeType.badge : ChallengeType.points;
+
+        $.post( hostUrl+"/api/v1/wallets", params)
+        .done(function(newChallenge) {
+            App.createAndAppendSuccStatus("createNewChallenge: " + JSON.stringify(newChallenge) );
+        })
+        .fail(function(error) {
+            App.createAndAppendErrorStatus(JSON.stringify(error))
+        })
+    },
+    
+    configureAdminMenu: function (currentAccount) {
+        var tokenInstance;
+        ERC20TokenContract.deployed().then(function (instance) {
+            tokenInstance = instance;
+            return tokenInstance.owner.call();
+        }).then(function (value) {
+            App.configureMenuAsAdmin(value == currentAccount)
+        }).catch(function (e) {
+            App.createAndAppendErrorStatus("Error getting points balance; see log.")
+        });
+    },
+
+    configureMenuAsAdmin: function (isAdmin) {
+        var display = isAdmin == true ? "" : "none";
+        document.getElementById("addNewChallenge").style.display = display;
+
     }
-
-
 
 
     // watchTokenEvents: function () {
