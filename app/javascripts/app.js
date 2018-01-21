@@ -157,20 +157,41 @@ window.App = {
             }).then(function(badges) {
                 App.createAndAppendSuccStatus("loadAccountChallengesBadges: " + JSON.stringify(badges));
                 // var accountChallenges = App.generateChallengesWithFullfiledBadges(badges);
-                var accountChallenges = [{"id":14,
-                    "address": "0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e",
-                    "title":"TEst",
-                    "description":" kadfk ahf sjhfkjas lfdsflaskf ",
-                    "reward_type":0,
-                    "created_at":"2018-01-21T07:41:13.459Z",
-                    "updated_at":"2018-01-21T07:41:13.459Z",
-                    badge: {
-                        challenge: "14",
-                        face: 2,
-                        mask: 4,
-                        color: 4,
-                        txHash: 35
-                    }}]
+
+                
+                
+                var accountChallenges = badges.map(function(badge){
+
+                    var found = {
+                        "id":badge[0],
+                        "address": "0x0",
+                        "title":"Undefined Challange",
+                        "description":"",
+                        "reward_type":0,
+                        "created_at":"2018-01-21T07:41:13.459Z",
+                        "updated_at":"2018-01-21T07:41:13.459Z",
+                        badge: {
+                            challenge: badge[0],
+                            face: badge[1].toNumber()-1,
+                            mask: badge[2].toNumber()-1,
+                            color: badge[3].toNumber(),
+                            txHash: 0
+                        }
+                    };
+
+                    for (var challange in allBadgeChallenges) {
+                        if (challange["id"] == badge[0]) {
+                            found["address"] = challange["address"];
+                            found["title"] = challange["title"];
+                            found["description"] = challange["description"];
+                            found["reward_type"] = challange["reward_type"];
+                            found["created_at"] = challange["created_at"];
+                            found["updated_at"] = challange["updated_at"];
+                        }
+                    }
+
+                    return found;
+                })
 
                 App.showGeneralBadgeChallenges(accountChallenges, App.createAccountBadgeChallengeTR);
                 App.drawBadges(badges);
@@ -182,10 +203,9 @@ window.App = {
     },
     
     loadBadgesByIdsPromise: function (ids, tokenInstance) {
-        ids.map(function (id) {
+        return Promise.all(ids.map(function (id) {
             return tokenInstance.getBadge.call(id);
-        })
-        return Promise.all(ids)
+        }))
     },
 
     generateChallengesWithFullfiledBadges: function (badges) {
@@ -221,6 +241,7 @@ window.App = {
 
         var divCard = document.createElement("div");
         divCard.setAttribute("class", "card pt-4");
+        divCard.setAttribute("id",  "badges-holder");
         divCard.appendChild(canvas);
         div.appendChild(divCard);
 
@@ -252,12 +273,17 @@ window.App = {
 
     drawBadges: function (badges) {
         badges.forEach(function (badge) {
-            var canvasId = "canvas_"+badge.face+"_"+badge.mask+"_"+badge.color;
+            var challange = badge[0];
+            var face = badge[1].toNumber();
+            var mask = badge[2].toNumber();
+            var color = badge[3].toNumber();
+            var canvasId = "canvas_"+face+"_"+mask+"_"+color;
+
             Badge.drawBadge({
                 canvasId: canvasId,
-                face: badge.face,
-                mask: badge.mask,
-                color: badge.color
+                face: face,
+                mask: mask,
+                color: color
             });
         })
     },
@@ -347,6 +373,7 @@ window.App = {
 
         var divCard = document.createElement("div");
         divCard.setAttribute("class", "card pt-4");
+        divCard.setAttribute("id", "badges-holder");
         div.appendChild(divCard);
 
         var img = document.createElement("img");
