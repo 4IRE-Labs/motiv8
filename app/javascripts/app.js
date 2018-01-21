@@ -165,7 +165,7 @@ window.App = {
                     var found = {
                         "id":badge[0],
                         "address": "0x0",
-                        "title":"Undefined Challange",
+                        "title":badge[0],
                         "description":"",
                         "reward_type":0,
                         "created_at":"2018-01-21T07:41:13.459Z",
