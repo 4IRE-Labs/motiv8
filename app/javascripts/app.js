@@ -25,7 +25,7 @@ var M8BadgeTokenAddress = "0xbaf7ad3d6e97d843a8b5d1bc7b3cd475d5521d2c";
 // For application bootstrapping, check out window.addEventListener below.
 var accounts;
 var account;
-var hostUrl = "http://cryptstarter.io";
+var hostUrl = "https://cryptstarter.io";
 var allBadgeChallenges;
 var allPointsChallenges;
 // var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
@@ -34,7 +34,7 @@ var ChallengeType = { badge: 0, points: 1 }
 var isDebug = false;
 
 var getQueryParam = function(param) {
-    var found = {};
+    var found;
     window.location.search.substr(1).split("&").forEach(function(item) {
         if (param ==  item.split("=")[0]) {
             found = item.split("=")[1];
@@ -126,11 +126,14 @@ window.App = {
     initMyAccount: function () {
         App.checkMetamaskConnection(function (account) {
             App.printImportantInformation();
-            App.updateAccountPoints();
+            App.updateAccountPoints(account);
             App.loadAccountChallenges(account);
         });
     },
-    updateAccountPoints: function () {
+    updateAccountPoints: function (account) {
+        if (getQueryParam("account") != undefined) {
+            account = getQueryParam("account");
+        }
         var tokenInstance;
         ERC20TokenContract.at(ERC20TokenAddress).then(function (instance) {
             tokenInstance = instance;
@@ -147,6 +150,9 @@ window.App = {
     /* Start of loading account badges */
 
     loadAccountChallenges: function (account) {
+        if (getQueryParam("account") != undefined) {
+            account = getQueryParam("account");
+        }
         App.loadAllChallenges(function () {
             var tokenInstance;
             M8BadgeToken.at(M8BadgeTokenAddress).then(function (instance) {
@@ -302,7 +308,7 @@ window.App = {
     claimBadge: function (challengeId) {
         console.log("----------" + challengeId)
 
-        $.post( hostUrl+"/api/v1//challenges/"+challengeId+"/claim", {  "challenge[user_address]": account })
+        $.post( hostUrl+"/api/v1/challenges/"+web3.toHex(challengeId)+"/claim", {  "challenge[user_address]": account })
         .done(function() {
             App.createAndAppendSuccStatus("Request to claim the badge was successfully sent")
         })
@@ -410,7 +416,7 @@ window.App = {
         button.setAttribute("type", "button");
         button.setAttribute("class", "btn btn-success");
         button.innerText = "Claim";
-        button.setAttribute("onclick", "App.claimBadge("+ challenge.id +");return false;");
+        button.setAttribute("onclick", "App.claimBadge("+ new web3.BigNumber(challenge.address) +");return false;");
         divCardBody.appendChild(button);
 
         return div

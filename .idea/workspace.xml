@@ -17,14 +17,14 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="118" column="13" lean-forward="true" selection-start-line="118" selection-start-column="13" selection-end-line="118" selection-end-column="13" />
+            <state relative-caret-position="263">
+              <caret line="421" column="18" lean-forward="true" selection-start-line="421" selection-start-column="18" selection-end-line="421" selection-end-column="18" />
               <folding>
                 <element signature="e#30#46#0" expanded="true" />
                 <element signature="e#201#239#0" expanded="true" />
                 <element signature="e#369#448#0" expanded="true" />
-                <marker date="1516538208694" expanded="true" signature="3759:3766" ph="×" />
-                <marker date="1516538208694" expanded="true" signature="16957:16964" ph="×" />
+                <marker date="1516541771349" expanded="true" signature="3755:3762" ph="×" />
+                <marker date="1516541771349" expanded="true" signature="18224:18231" ph="×" />
               </folding>
             </state>
           </provider>
@@ -132,9 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>bootstrap</find>
-      <find>setSta</find>
-      <find>Holy guacamole</find>
       <find>initManageToken</find>
       <find>printImportantInformation</find>
       <find>300</find>
@@ -154,7 +151,6 @@
       <find>card-title text-uppercase text-secondary</find>
       <find>canvas</find>
       <find>setAttribute(&quot;class&quot;, &quot;card-title text-uppercase text-seconda</find>
-      <find>claimBadge</find>
       <find>badges</find>
       <find>allBadgeChallengesContainer</find>
       <find>user-profile.html</find>
@@ -162,6 +158,10 @@
       <find>loadAllChallenges</find>
       <find>App.createAndAppendSuccStatus</find>
       <find>checkMetamaskConnection</find>
+      <find>claimBadge: function (challengeId</find>
+      <find>//</find>
+      <find>getQueryParam</find>
+      <find>claimBadge</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -358,8 +358,8 @@
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516538208694" expanded="true" signature="3759:3766" ph="×" />
-            <marker date="1516538208694" expanded="true" signature="16957:16964" ph="×" />
+            <marker date="1516541771349" expanded="true" signature="3755:3762" ph="×" />
+            <marker date="1516541771349" expanded="true" signature="18224:18231" ph="×" />
           </folding>
         </state>
       </provider>
@@ -412,8 +412,8 @@
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516538208694" expanded="true" signature="3759:3766" ph="×" />
-            <marker date="1516538208694" expanded="true" signature="16957:16964" ph="×" />
+            <marker date="1516541771349" expanded="true" signature="3755:3762" ph="×" />
+            <marker date="1516541771349" expanded="true" signature="18224:18231" ph="×" />
           </folding>
         </state>
       </provider>
@@ -700,14 +700,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="118" column="13" lean-forward="true" selection-start-line="118" selection-start-column="13" selection-end-line="118" selection-end-column="13" />
+        <state relative-caret-position="263">
+          <caret line="421" column="18" lean-forward="true" selection-start-line="421" selection-start-column="18" selection-end-line="421" selection-end-column="18" />
           <folding>
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516538208694" expanded="true" signature="3759:3766" ph="×" />
-            <marker date="1516538208694" expanded="true" signature="16957:16964" ph="×" />
+            <marker date="1516541771349" expanded="true" signature="3755:3762" ph="×" />
+            <marker date="1516541771349" expanded="true" signature="18224:18231" ph="×" />
           </folding>
         </state>
       </provider>
