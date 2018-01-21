@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51c0ddde-24f8-4620-9f3f-195fed63dc7a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
-      <change beforePath="$PROJECT_DIR$/app/index1.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/app/javascripts/app.js" afterPath="$PROJECT_DIR$/app/javascripts/app.js" />
-      <change beforePath="$PROJECT_DIR$/app/user-profile.html" afterPath="$PROJECT_DIR$/app/user-profile.html" />
-      <change beforePath="$PROJECT_DIR$/app/wrong-network-2.html" afterPath="$PROJECT_DIR$/app/wrong-network-2.html" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" afterPath="$PROJECT_DIR$/webpack.config.js" />
     </list>
     <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,14 +17,14 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="116" column="11" lean-forward="true" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
+            <state relative-caret-position="218">
+              <caret line="193" column="36" lean-forward="false" selection-start-line="193" selection-start-column="33" selection-end-line="193" selection-end-column="36" />
               <folding>
                 <element signature="e#30#46#0" expanded="true" />
                 <element signature="e#201#239#0" expanded="true" />
                 <element signature="e#369#448#0" expanded="true" />
-                <marker date="1516537007525" expanded="true" signature="3702:3709" ph="×" />
-                <marker date="1516537007525" expanded="true" signature="16532:16539" ph="×" />
+                <marker date="1516537275631" expanded="true" signature="3738:3745" ph="×" />
+                <marker date="1516537275631" expanded="true" signature="16614:16621" ph="×" />
               </folding>
             </state>
           </provider>
@@ -38,7 +34,7 @@
         <entry file="file://$PROJECT_DIR$/app/canvas.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="645">
-              <caret line="43" column="21" lean-forward="true" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
+              <caret line="43" column="21" lean-forward="false" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -74,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Ownable.sol" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol">
+      <file leaf-file-name="webpack.config.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/webpack.config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="22" />
+            <state relative-caret-position="203">
+              <caret line="19" column="57" lean-forward="false" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -96,7 +92,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin-challenge-add.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="admin-challenge-add.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/admin-challenge-add.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="539">
@@ -136,7 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>app.css</find>
       <find>bootstrapEntryPoints</find>
       <find>bootstrap</find>
       <find>setSta</find>
@@ -166,6 +161,7 @@
       <find>checkMetamaskConnection</find>
       <find>allBadgeChallengesContainer</find>
       <find>user-profile.html</find>
+      <find>index1</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -180,7 +176,6 @@
         <option value="$PROJECT_DIR$/contracts/Motiv8ERC20Token.sol" />
         <option value="$PROJECT_DIR$/webpack.bootstrap.config.js" />
         <option value="$PROJECT_DIR$/test/02_m8badge.js" />
-        <option value="$PROJECT_DIR$/webpack.config.js" />
         <option value="$PROJECT_DIR$/migrations/2_deploy_contracts.js" />
         <option value="$PROJECT_DIR$/app/javascripts/canvas.js" />
         <option value="$PROJECT_DIR$/app/javascripts/app.js" />
@@ -188,6 +183,7 @@
         <option value="$PROJECT_DIR$/app/wrong-network-2.html" />
         <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/admin-challenge-add.html" />
+        <option value="$PROJECT_DIR$/webpack.config.js" />
       </list>
     </option>
   </component>
@@ -362,8 +358,8 @@
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516537007525" expanded="true" signature="3702:3709" ph="×" />
-            <marker date="1516537007525" expanded="true" signature="16532:16539" ph="×" />
+            <marker date="1516537275631" expanded="true" signature="3738:3745" ph="×" />
+            <marker date="1516537275631" expanded="true" signature="16614:16621" ph="×" />
           </folding>
         </state>
       </provider>
@@ -416,8 +412,8 @@
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516537007525" expanded="true" signature="3702:3709" ph="×" />
-            <marker date="1516537007525" expanded="true" signature="16532:16539" ph="×" />
+            <marker date="1516537275631" expanded="true" signature="3738:3745" ph="×" />
+            <marker date="1516537275631" expanded="true" signature="16614:16621" ph="×" />
           </folding>
         </state>
       </provider>
@@ -550,14 +546,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="22" column="81" lean-forward="true" selection-start-line="22" selection-start-column="81" selection-end-line="22" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/contracts/M8BadgeBase.sol">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-241">
@@ -657,22 +645,8 @@
     <entry file="file://$PROJECT_DIR$/app/canvas.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="645">
-          <caret line="43" column="21" lean-forward="true" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
+          <caret line="43" column="21" lean-forward="false" selection-start-line="43" selection-start-column="21" selection-end-line="43" selection-end-column="21" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="116" column="11" lean-forward="true" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
-          <folding>
-            <element signature="e#30#46#0" expanded="true" />
-            <element signature="e#201#239#0" expanded="true" />
-            <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516537007525" expanded="true" signature="3702:3709" ph="×" />
-            <marker date="1516537007525" expanded="true" signature="16532:16539" ph="×" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -713,6 +687,28 @@
           <folding>
             <element signature="n#style#0;n#li#3;n#ul#0;n#div#1;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="193" column="36" lean-forward="false" selection-start-line="193" selection-start-column="33" selection-end-line="193" selection-end-column="36" />
+          <folding>
+            <element signature="e#30#46#0" expanded="true" />
+            <element signature="e#201#239#0" expanded="true" />
+            <element signature="e#369#448#0" expanded="true" />
+            <marker date="1516537275631" expanded="true" signature="3738:3745" ph="×" />
+            <marker date="1516537275631" expanded="true" signature="16614:16621" ph="×" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="19" column="57" lean-forward="false" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
