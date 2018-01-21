@@ -206,8 +206,8 @@ window.App = {
         var canvasId = "canvas_"+badge.face+"_"+badge.mask+"_"+badge.color;
         var canvas = document.createElement("canvas");
         canvas.setAttribute("id", canvasId);
-        canvas.setAttribute("width", 100);
-        canvas.setAttribute("height", 100);
+        canvas.setAttribute("width", 200);
+        canvas.setAttribute("height", 200);
         canvas.setAttribute("alt", "card image");
         canvas.setAttribute("class", "card-img mx-auto");
 
@@ -264,6 +264,8 @@ window.App = {
 
 
     claimBadge: function (event) {
+        var challengeId = event.target.getAttribute('dataChallengeId');
+        console.log("----------" + challengeId)
         // var target = event.target
         //
         // $.post( hostUrl+"/api/v1/wallets/check-donation", {  address: testAccount })
@@ -342,14 +344,52 @@ window.App = {
     createGeneralBadgeChallengeTR: function (challenge) {
         var div = document.createElement("div");
         div.setAttribute("class", "col-sm-4");
-        div.innerHTML =
-            '<div class="card pt-4">' +
-            '<img class="card-img mx-auto" src="images/card-img-1.svg" alt="card image">' +
-            '<div class="card-body">' +
-            '<h5 class="card-title text-uppercase text-secondary">' + challenge.title + '</h5>' +
-            '<p class="card-text text-secondary">'+challenge.description+'</p>' +
-            '</div>' +
-            '</div>';
+
+        var divCard = document.createElement("div");
+        divCard.setAttribute("class", "card pt-4");
+        div.appendChild(divCard);
+
+        var img = document.createElement("img");
+        img.setAttribute("class", "card-img mx-auto");
+        img.setAttribute("src", "images/card-img-1.svg");
+        img.setAttribute("alt", "card image");
+        divCard.appendChild(img);
+
+        var divCardBody = document.createElement("div");
+        divCardBody.setAttribute("class", "card-body");
+        divCard.appendChild(divCardBody);
+
+        var h5 = document.createElement("h5");
+        h5.setAttribute("class", "card-title text-uppercase text-secondary");
+        h5.innerText = challenge.title;
+        divCardBody.appendChild(h5);
+
+        var p = document.createElement("p");
+        p.setAttribute("class", "card-text text-secondary");
+        p.innerText = challenge.description;
+        divCardBody.appendChild(p);
+
+        var button = document.createElement("button");
+        button.setAttribute("type", "button");
+        button.setAttribute("class", "btn btn-success");
+        button.innerText = "Claim";
+        button.setAttribute("dataChallengeId", challenge.id);
+        button.setAttribute("onclick", "App.claimBadge();return false;");
+        divCardBody.appendChild(button);
+
+
+
+        // var div = document.createElement("div");
+        // div.setAttribute("class", "col-sm-4");
+        // div.innerHTML =
+        //     '<div class="card pt-4">' +
+        //
+        //     '<div class="card-body">' +
+        //     '<h5 class="card-title text-uppercase text-secondary">' + challenge.title + '</h5>' +
+        //     '<p class="card-text text-secondary">'+challenge.description+'</p>' +
+        //     '<button type="button" class="" onclick="App.claimBadge(\'' + challenge + '\');return false;">Claim</button>'
+        //     '</div>' +
+        //     '</div>';
         return div
     },
 
