@@ -28,7 +28,7 @@ var account;
 var hostUrl = "http://cryptstarter.io";
 var allBadgeChallenges;
 var allPointsChallenges;
-var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
+// var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
 
 var ChallengeType = { badge: 0, points: 1 }
 
@@ -156,10 +156,7 @@ window.App = {
                 return App.loadBadgesByIdsPromise(tokensIds, tokenInstance);
             }).then(function(badges) {
                 App.createAndAppendSuccStatus("loadAccountChallengesBadges: " + JSON.stringify(badges));
-                // var accountChallenges = App.generateChallengesWithFullfiledBadges(badges);
 
-                
-                
                 var accountChallenges = badges.map(function(badge){
 
                     var found = {
@@ -172,8 +169,8 @@ window.App = {
                         "updated_at":"2018-01-21T07:41:13.459Z",
                         badge: {
                             challenge: badge[0],
-                            face: badge[1].toNumber()-1,
-                            mask: badge[2].toNumber()-1,
+                            face: badge[1].toNumber()+1,
+                            mask: badge[2].toNumber()+1,
                             color: badge[3].toNumber(),
                             txHash: 0
                         }
@@ -274,8 +271,8 @@ window.App = {
     drawBadges: function (badges) {
         badges.forEach(function (badge) {
             var challange = badge[0];
-            var face = badge[1].toNumber();
-            var mask = badge[2].toNumber();
+            var face = badge[1].toNumber()+1;
+            var mask = badge[2].toNumber()+1;
             var color = badge[3].toNumber();
             var canvasId = "canvas_"+face+"_"+mask+"_"+color;
 
