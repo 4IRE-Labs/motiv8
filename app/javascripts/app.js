@@ -13,8 +13,10 @@ import erc20_token_artifacts from '../../build/contracts/Motiv8ERC20Token.json'
 import m8BadgeToken_artifacts from '../../build/contracts/M8BadgeToken.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
-var ERC20TokenContract = contract("0x97ce88c86d9e01e381495b2632109e5c9b4d0d6a", erc20_token_artifacts['abi']);
-var M8BadgeToken = contract("0xbaf7ad3d6e97d843a8b5d1bc7b3cd475d5521d2c", m8BadgeToken_artifacts['abi']);
+var ERC20TokenContract = contract(erc20_token_artifacts);
+var ERC20TokenAddress = "0x97ce88c86d9e01e381495b2632109e5c9b4d0d6a";
+var M8BadgeToken = contract(m8BadgeToken_artifacts);
+var M8BadgeTokenAddress = "0xbaf7ad3d6e97d843a8b5d1bc7b3cd475d5521d2c";
 
 // var ERC20TokenContract = contract(“0x97ce88c86d9e01e381495b2632109e5c9b4d0d6a”, erc20_token_artifacts[‘abi’]);
 
@@ -129,7 +131,7 @@ window.App = {
     },
     updateAccountPoints: function () {
         var tokenInstance;
-        ERC20TokenContract.deployed().then(function (instance) {
+        ERC20TokenContract.at(ERC20TokenAddress).then(function (instance) {
             tokenInstance = instance;
             return tokenInstance.balanceOf.call(account);
         }).then(function (value) {
@@ -146,7 +148,7 @@ window.App = {
     loadAccountChallenges: function (account) {
         App.loadAllChallenges(function () {
             var tokenInstance;
-            M8BadgeToken.deployed().then(function (instance) {
+            M8BadgeToken.at(M8BadgeTokenAddress).then(function (instance) {
                 tokenInstance = instance;
                 return tokenInstance.tokensOfOwner.call(account);
             }).then(function (tokensIds) {
@@ -409,7 +411,7 @@ window.App = {
     
     configureAdminMenu: function (currentAccount) {
         var tokenInstance;
-        ERC20TokenContract.deployed().then(function (instance) {
+        ERC20TokenContract.at(ERC20TokenAddress).then(function (instance) {
             tokenInstance = instance;
             return tokenInstance.owner.call();
         }).then(function (value) {
@@ -428,7 +430,7 @@ window.App = {
 
     // watchTokenEvents: function () {
     //     var tokenInstance;
-    //     ERC20TokenContract.deployed().then(function (instance) {
+    //     ERC20TokenContract.at(ERC20TokenAddress).then(function (instance) {
     //         tokenInstance = instance;
     //         tokenInstance.allEvents({}, {fromBlock: 0, toBlock: 'latest'}).watch(function (error, result) {
     //             var alertbox = document.createElement("div");
