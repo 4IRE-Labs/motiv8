@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51c0ddde-24f8-4620-9f3f-195fed63dc7a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/webpack.config.js" afterPath="$PROJECT_DIR$/webpack.config.js" />
+      <change beforePath="$PROJECT_DIR$/app/javascripts/app.js" afterPath="$PROJECT_DIR$/app/javascripts/app.js" />
     </list>
     <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,17 +14,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="193" column="36" lean-forward="false" selection-start-line="193" selection-start-column="33" selection-end-line="193" selection-end-column="36" />
+            <state relative-caret-position="98">
+              <caret line="118" column="13" lean-forward="true" selection-start-line="118" selection-start-column="13" selection-end-line="118" selection-end-column="13" />
               <folding>
                 <element signature="e#30#46#0" expanded="true" />
                 <element signature="e#201#239#0" expanded="true" />
                 <element signature="e#369#448#0" expanded="true" />
-                <marker date="1516537275631" expanded="true" signature="3738:3745" ph="×" />
-                <marker date="1516537275631" expanded="true" signature="16614:16621" ph="×" />
+                <marker date="1516538208694" expanded="true" signature="3759:3766" ph="×" />
+                <marker date="1516538208694" expanded="true" signature="16957:16964" ph="×" />
               </folding>
             </state>
           </provider>
@@ -70,7 +70,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="webpack.config.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="webpack.config.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webpack.config.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="203">
@@ -132,7 +132,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>bootstrapEntryPoints</find>
       <find>bootstrap</find>
       <find>setSta</find>
       <find>Holy guacamole</find>
@@ -148,7 +147,6 @@
       <find>configureAdminMenu</find>
       <find>checkMetamaskConnectioncheckMetamaskConnection</find>
       <find>Hmmm...</find>
-      <find>loadAllChallenges</find>
       <find>generateChallengesWithFullfiledBadges</find>
       <find>loadAccountChallenges</find>
       <find>testAccount</find>
@@ -158,10 +156,12 @@
       <find>setAttribute(&quot;class&quot;, &quot;card-title text-uppercase text-seconda</find>
       <find>claimBadge</find>
       <find>badges</find>
-      <find>checkMetamaskConnection</find>
       <find>allBadgeChallengesContainer</find>
       <find>user-profile.html</find>
       <find>index1</find>
+      <find>loadAllChallenges</find>
+      <find>App.createAndAppendSuccStatus</find>
+      <find>checkMetamaskConnection</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -178,12 +178,12 @@
         <option value="$PROJECT_DIR$/test/02_m8badge.js" />
         <option value="$PROJECT_DIR$/migrations/2_deploy_contracts.js" />
         <option value="$PROJECT_DIR$/app/javascripts/canvas.js" />
-        <option value="$PROJECT_DIR$/app/javascripts/app.js" />
         <option value="$PROJECT_DIR$/app/user-profile.html" />
         <option value="$PROJECT_DIR$/app/wrong-network-2.html" />
         <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/admin-challenge-add.html" />
         <option value="$PROJECT_DIR$/webpack.config.js" />
+        <option value="$PROJECT_DIR$/app/javascripts/app.js" />
       </list>
     </option>
   </component>
@@ -358,8 +358,8 @@
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516537275631" expanded="true" signature="3738:3745" ph="×" />
-            <marker date="1516537275631" expanded="true" signature="16614:16621" ph="×" />
+            <marker date="1516538208694" expanded="true" signature="3759:3766" ph="×" />
+            <marker date="1516538208694" expanded="true" signature="16957:16964" ph="×" />
           </folding>
         </state>
       </provider>
@@ -412,8 +412,8 @@
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516537275631" expanded="true" signature="3738:3745" ph="×" />
-            <marker date="1516537275631" expanded="true" signature="16614:16621" ph="×" />
+            <marker date="1516538208694" expanded="true" signature="3759:3766" ph="×" />
+            <marker date="1516538208694" expanded="true" signature="16957:16964" ph="×" />
           </folding>
         </state>
       </provider>
@@ -690,25 +690,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="193" column="36" lean-forward="false" selection-start-line="193" selection-start-column="33" selection-end-line="193" selection-end-column="36" />
-          <folding>
-            <element signature="e#30#46#0" expanded="true" />
-            <element signature="e#201#239#0" expanded="true" />
-            <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516537275631" expanded="true" signature="3738:3745" ph="×" />
-            <marker date="1516537275631" expanded="true" signature="16614:16621" ph="×" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webpack.config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
           <caret line="19" column="57" lean-forward="false" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="118" column="13" lean-forward="true" selection-start-line="118" selection-start-column="13" selection-end-line="118" selection-end-column="13" />
+          <folding>
+            <element signature="e#30#46#0" expanded="true" />
+            <element signature="e#201#239#0" expanded="true" />
+            <element signature="e#369#448#0" expanded="true" />
+            <marker date="1516538208694" expanded="true" signature="3759:3766" ph="×" />
+            <marker date="1516538208694" expanded="true" signature="16957:16964" ph="×" />
+          </folding>
         </state>
       </provider>
     </entry>

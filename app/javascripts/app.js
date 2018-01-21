@@ -31,6 +31,7 @@ var allPointsChallenges;
 // var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
 
 var ChallengeType = { badge: 0, points: 1 }
+var isDebug = false;
 
 var getQueryParam = function(param) {
     var found = {};
@@ -112,7 +113,7 @@ window.App = {
     checkMetamaskConnection: function (callBackSucc) {
         web3.eth.getAccounts(function (err, accs) {
             if (err != undefined || accs.length == 0) {
-                window.location.replace("/user-using-wrong-network.html");
+                window.location.replace("user-using-wrong-network.html");
             } else {
                 callBackSucc(accs[0]);
             }
@@ -152,10 +153,14 @@ window.App = {
                 tokenInstance = instance;
                 return tokenInstance.tokensOfOwner.call(account);
             }).then(function (tokensIds) {
-                App.createAndAppendSuccStatus("loadAccountChallengesIds: " + JSON.stringify(tokensIds));
+                if (isDebug) {
+                    App.createAndAppendSuccStatus("loadAccountChallengesIds: " + JSON.stringify(tokensIds));
+                }
                 return App.loadBadgesByIdsPromise(tokensIds, tokenInstance);
             }).then(function(badges) {
-                App.createAndAppendSuccStatus("loadAccountChallengesBadges: " + JSON.stringify(badges));
+                if (isDebug) {
+                    App.createAndAppendSuccStatus("loadAccountChallengesBadges: " + JSON.stringify(badges));
+                }
                 var accountChallenges = App.generateChallengesWithFullfiledBadges(badges);
                 //
                 // var accountChallenges = [{"id":14,
@@ -239,6 +244,11 @@ window.App = {
         p.innerText = challenge.description;
         divCardBody.appendChild(p);
 
+        var p2 = document.createElement("p");
+        p2.setAttribute("class", "card-text text-secondary");
+        p2.innerText = "Address: " + challenge.address;
+        divCardBody.appendChild(p2);
+
 
         // div.innerHTML =
             // '<div class="card pt-4">' +
@@ -292,7 +302,9 @@ window.App = {
     loadAllChallenges: function (callback) {
         $.get( hostUrl+"/api/v1/wallets")
         .done(function(challenges) {
-            App.createAndAppendSuccStatus("loadAllChallenges: " + JSON.stringify(challenges) );
+            if (isDebug) {
+                App.createAndAppendSuccStatus("loadAllChallenges: " + JSON.stringify(challenges));
+            }
             allBadgeChallenges = App.filterChallenges(challenges, ChallengeType.badge);
             allPointsChallenges = App.filterChallenges(challenges, ChallengeType.points);
             callback(challenges)
@@ -402,7 +414,7 @@ window.App = {
 
         $.post( hostUrl+"/api/v1/wallets", params)
         .done(function(newChallenge) {
-            App.createAndAppendSuccStatus("createNewChallenge: " + JSON.stringify(newChallenge) );
+            App.createAndAppendSuccStatus("New challange was added");
         })
         .fail(function(error) {
             App.createAndAppendErrorStatus(JSON.stringify(error))
