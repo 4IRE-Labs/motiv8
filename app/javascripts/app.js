@@ -106,7 +106,8 @@ window.App = {
         App.updateAccountPoints();
         App.updateAccountBadges();
 
-        App.checkMetamaskConnection()
+        App.checkMetamaskConnection();
+        App.loadAccountChallenges();
     },
     updateAccountPoints: function () {
         var tokenInstance;
@@ -121,18 +122,66 @@ window.App = {
             App.createAndAppendErrorStatus("Error getting points balance; see log.")
         });
     },
-    updateAccountBadges: function () {
-        $.post( hostUrl+"/api/v1/wallets/check-donation", {  address: testAccount })
-        .done(function(data) {
-            App.createAndAppendSuccStatus("updateAccountBadges: " + JSON.stringify(data) )
+
+    loadAccountChallenges: function () {
+        $.get( hostUrl+"/api/v1/wallets")
+        .done(function(challenges) {
+            App.createAndAppendSuccStatus("loadAllChallenges: " + JSON.stringify(challenges) );
+
+            App.showGeneralPointsChallenges(App.filterChallenges(challenges, ChallengeType.points));
+            App.showGeneralBadgeChallenges(App.filterChallenges(challenges, ChallengeType.badge));
         })
         .fail(function(error) {
             App.createAndAppendErrorStatus(JSON.stringify(error))
         })
     },
 
-    claimBadge: function (budgeId) {
+    createAccountPointChallengeTR: function (challenge) {
+        var tr = document.createElement("tr");
 
+        var fTd = document.createElement("td");
+        fTd.setAttribute("scope", "row");
+        fTd.innerText = new Date(challenge.created_at).toDateString();
+
+        var sTd = document.createElement("td");
+        sTd.innerText = challenge.title;
+
+        var tTd = document.createElement("td");
+        tTd.setAttribute("class", "text-right");
+        tTd.innerText = challenge.address;
+
+        tr.appendChild(fTd);
+        tr.appendChild(sTd);
+        tr.appendChild(tTd);
+        return tr;
+    },
+
+    createAccountBadgeChallengeTR: function (challenge) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "col-sm-4");
+        div.innerHTML =
+            '<div class="card pt-4">' +
+            '<img class="card-img mx-auto" src="images/card-img-1.svg" alt="card image">' +
+            '<div class="card-body">' +
+            '<h5 class="card-title text-uppercase text-secondary">' + challenge.title + '</h5>' +
+            '<p class="card-text text-secondary">'+challenge.description+'</p>' +
+            '</div>' +
+            '</div>';
+        return div
+    },
+
+
+
+    claimBadge: function (event) {
+        // var target = event.target
+        //
+        // $.post( hostUrl+"/api/v1/wallets/check-donation", {  address: testAccount })
+        // .done(function(data) {
+        //     App.createAndAppendSuccStatus("updateAccountBadges: " + JSON.stringify(data) )
+        // })
+        // .fail(function(error) {
+        //     App.createAndAppendErrorStatus(JSON.stringify(error))
+        // })
     },
 
     /**
@@ -148,8 +197,8 @@ window.App = {
         .done(function(challenges) {
             App.createAndAppendSuccStatus("loadAllChallenges: " + JSON.stringify(challenges) );
 
-            App.showGeneralPointsChallenges(App.filterChallenges(challenges, ChallengeType.points));
-            App.showGeneralBadgeChallenges(App.filterChallenges(challenges, ChallengeType.badge));
+            App.showGeneralPointsChallenges(App.filterChallenges(challenges, ChallengeType.points), App.createGeneralPointChallengeTR);
+            App.showGeneralBadgeChallenges(App.filterChallenges(challenges, ChallengeType.badge), App.createGeneralBadgeChallengeTR);
         })
         .fail(function(error) {
             App.createAndAppendErrorStatus(JSON.stringify(error))
@@ -162,17 +211,17 @@ window.App = {
         })
     },
 
-    showGeneralPointsChallenges: function (pointsChallenges) {
+    showGeneralPointsChallenges: function (pointsChallenges, constructorFunc) {
         var pointsChallengesElem = document.getElementById("pointsChallenges")
         pointsChallenges.forEach(function (challenge) {
-            pointsChallengesElem.appendChild(App.createGeneralPointChallengeTR(challenge))
+            pointsChallengesElem.appendChild(constructorFunc(challenge))
         })
     },
 
-    showGeneralBadgeChallenges: function (badgeChallenges) {
+    showGeneralBadgeChallenges: function (badgeChallenges, constructorFunc) {
         var pointsChallengesElem = document.getElementById("allBadgeChallengesContainer")
         badgeChallenges.forEach(function (challenge) {
-            pointsChallengesElem.appendChild(App.createGeneralBadgeChallengeTR(challenge))
+            pointsChallengesElem.appendChild(constructorFunc(challenge))
         })
     },
 
