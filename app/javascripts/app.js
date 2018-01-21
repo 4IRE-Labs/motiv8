@@ -208,8 +208,8 @@ window.App = {
         var canvasId = "canvas_"+badge.face+"_"+badge.mask+"_"+badge.color;
         var canvas = document.createElement("canvas");
         canvas.setAttribute("id", canvasId);
-        canvas.setAttribute("width", 100);
-        canvas.setAttribute("height", 100);
+        canvas.setAttribute("width", 200);
+        canvas.setAttribute("height", 200);
         canvas.setAttribute("alt", "card image");
         canvas.setAttribute("class", "card-img mx-auto");
 
@@ -265,16 +265,16 @@ window.App = {
     /* End of loading account badges */
 
 
-    claimBadge: function (event) {
-        // var target = event.target
-        //
-        // $.post( hostUrl+"/api/v1/wallets/check-donation", {  address: testAccount })
-        // .done(function(data) {
-        //     App.createAndAppendSuccStatus("updateAccountBadges: " + JSON.stringify(data) )
-        // })
-        // .fail(function(error) {
-        //     App.createAndAppendErrorStatus(JSON.stringify(error))
-        // })
+    claimBadge: function (challengeId) {
+        console.log("----------" + challengeId)
+
+        $.post( hostUrl+"/api/v1//challenges/"+challengeId+"/claim", {  "challenge[user_address]": account })
+        .done(function() {
+            App.createAndAppendSuccStatus("Request to claim the badge was successfully sent")
+        })
+        .fail(function(error) {
+            App.createAndAppendErrorStatus(JSON.stringify(error))
+        })
     },
 
     /**
@@ -344,14 +344,38 @@ window.App = {
     createGeneralBadgeChallengeTR: function (challenge) {
         var div = document.createElement("div");
         div.setAttribute("class", "col-sm-4");
-        div.innerHTML =
-            '<div class="card pt-4">' +
-            '<img class="card-img mx-auto" src="images/card-img-1.svg" alt="card image">' +
-            '<div class="card-body">' +
-            '<h5 class="card-title text-uppercase text-secondary">' + challenge.title + '</h5>' +
-            '<p class="card-text text-secondary">'+challenge.description+'</p>' +
-            '</div>' +
-            '</div>';
+
+        var divCard = document.createElement("div");
+        divCard.setAttribute("class", "card pt-4");
+        div.appendChild(divCard);
+
+        var img = document.createElement("img");
+        img.setAttribute("class", "card-img mx-auto");
+        img.setAttribute("src", "images/card-img-1.svg");
+        img.setAttribute("alt", "card image");
+        divCard.appendChild(img);
+
+        var divCardBody = document.createElement("div");
+        divCardBody.setAttribute("class", "card-body");
+        divCard.appendChild(divCardBody);
+
+        var h5 = document.createElement("h5");
+        h5.setAttribute("class", "card-title text-uppercase text-secondary");
+        h5.innerText = challenge.title;
+        divCardBody.appendChild(h5);
+
+        var p = document.createElement("p");
+        p.setAttribute("class", "card-text text-secondary");
+        p.innerText = challenge.description;
+        divCardBody.appendChild(p);
+
+        var button = document.createElement("button");
+        button.setAttribute("type", "button");
+        button.setAttribute("class", "btn btn-success");
+        button.innerText = "Claim";
+        button.setAttribute("onclick", "App.claimBadge("+ challenge.id +");return false;");
+        divCardBody.appendChild(button);
+
         return div
     },
 
