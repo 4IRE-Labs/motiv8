@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="51c0ddde-24f8-4620-9f3f-195fed63dc7a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/app/javascripts/app.js" afterPath="$PROJECT_DIR$/app/javascripts/app.js" />
-      <change beforePath="$PROJECT_DIR$/app/user-profile.html" afterPath="$PROJECT_DIR$/app/user-profile.html" />
     </list>
     <ignored path="$PROJECT_DIR$/build/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,17 +14,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="148" column="29" lean-forward="true" selection-start-line="148" selection-start-column="29" selection-end-line="148" selection-end-column="29" />
+            <state relative-caret-position="233">
+              <caret line="206" column="51" lean-forward="false" selection-start-line="206" selection-start-column="45" selection-end-line="206" selection-end-column="51" />
               <folding>
                 <element signature="e#30#46#0" expanded="true" />
                 <element signature="e#201#239#0" expanded="true" />
                 <element signature="e#369#448#0" expanded="true" />
-                <marker date="1516531240034" expanded="true" signature="3223:3230" ph="×" />
-                <marker date="1516531240034" expanded="true" signature="15049:15056" ph="×" />
+                <marker date="1516533327162" expanded="true" signature="3699:3706" ph="×" />
+                <marker date="1516533327162" expanded="true" signature="15621:15628" ph="×" />
               </folding>
             </state>
           </provider>
@@ -35,7 +34,17 @@
         <entry file="file://$PROJECT_DIR$/app/canvas.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="420">
-              <caret line="36" column="28" lean-forward="true" selection-start-line="36" selection-start-column="28" selection-end-line="41" selection-end-column="31" />
+              <caret line="36" column="38" lean-forward="true" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="canvas.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/javascripts/canvas.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="34" column="4" lean-forward="false" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -74,7 +83,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
+            <state relative-caret-position="438">
               <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#li#3;n#ul#0;n#div#1;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -83,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user-profile.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="user-profile.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/user-profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="95" column="20" lean-forward="true" selection-start-line="76" selection-start-column="9" selection-end-line="95" selection-end-column="20" />
+            <state relative-caret-position="372">
+              <caret line="87" column="35" lean-forward="true" selection-start-line="87" selection-start-column="35" selection-end-line="87" selection-end-column="35" />
               <folding>
                 <element signature="n#style#0;n#li#3;n#ul#0;n#div#1;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -99,7 +108,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>imports-loader</find>
       <find>85</find>
       <find>8545</find>
       <find>balanceOf</find>
@@ -125,10 +133,11 @@
       <find>checkMetamaskConnectioncheckMetamaskConnection</find>
       <find>loadall</find>
       <find>Hmmm...</find>
-      <find>allBadgeChallengesContainer</find>
       <find>loadAllChallenges</find>
       <find>generateChallengesWithFullfiledBadges</find>
+      <find>allBadgeChallengesContainer</find>
       <find>loadAccountChallenges</find>
+      <find>testAccount</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -148,8 +157,8 @@
         <option value="$PROJECT_DIR$/app/javascripts/canvas.js" />
         <option value="$PROJECT_DIR$/app/admin-challenge-add.html" />
         <option value="$PROJECT_DIR$/app/index.html" />
-        <option value="$PROJECT_DIR$/app/javascripts/app.js" />
         <option value="$PROJECT_DIR$/app/user-profile.html" />
+        <option value="$PROJECT_DIR$/app/javascripts/app.js" />
       </list>
     </option>
   </component>
@@ -331,8 +340,8 @@
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516531240034" expanded="true" signature="3223:3230" ph="×" />
-            <marker date="1516531240034" expanded="true" signature="15049:15056" ph="×" />
+            <marker date="1516533327162" expanded="true" signature="3699:3706" ph="×" />
+            <marker date="1516533327162" expanded="true" signature="15621:15628" ph="×" />
           </folding>
         </state>
       </provider>
@@ -385,8 +394,8 @@
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516531240034" expanded="true" signature="3223:3230" ph="×" />
-            <marker date="1516531240034" expanded="true" signature="15049:15056" ph="×" />
+            <marker date="1516533327162" expanded="true" signature="3699:3706" ph="×" />
+            <marker date="1516533327162" expanded="true" signature="15621:15628" ph="×" />
           </folding>
         </state>
       </provider>
@@ -593,14 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/javascripts/canvas.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="18" lean-forward="true" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/02_m8badge.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -635,10 +636,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/index.html">
+    <entry file="file://$PROJECT_DIR$/app/user-profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+        <state relative-caret-position="372">
+          <caret line="87" column="35" lean-forward="true" selection-start-line="87" selection-start-column="35" selection-end-line="87" selection-end-column="35" />
           <folding>
             <element signature="n#style#0;n#li#3;n#ul#0;n#div#1;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
@@ -648,31 +649,39 @@
     <entry file="file://$PROJECT_DIR$/app/canvas.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
-          <caret line="36" column="28" lean-forward="true" selection-start-line="36" selection-start-column="28" selection-end-line="41" selection-end-column="31" />
+          <caret line="36" column="38" lean-forward="true" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/javascripts/canvas.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="34" column="4" lean-forward="false" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#li#3;n#ul#0;n#div#1;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/javascripts/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="148" column="29" lean-forward="true" selection-start-line="148" selection-start-column="29" selection-end-line="148" selection-end-column="29" />
+        <state relative-caret-position="233">
+          <caret line="206" column="51" lean-forward="false" selection-start-line="206" selection-start-column="45" selection-end-line="206" selection-end-column="51" />
           <folding>
             <element signature="e#30#46#0" expanded="true" />
             <element signature="e#201#239#0" expanded="true" />
             <element signature="e#369#448#0" expanded="true" />
-            <marker date="1516531240034" expanded="true" signature="3223:3230" ph="×" />
-            <marker date="1516531240034" expanded="true" signature="15049:15056" ph="×" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/user-profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="95" column="20" lean-forward="true" selection-start-line="76" selection-start-column="9" selection-end-line="95" selection-end-column="20" />
-          <folding>
-            <element signature="n#style#0;n#li#3;n#ul#0;n#div#1;n#header#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1516533327162" expanded="true" signature="3699:3706" ph="×" />
+            <marker date="1516533327162" expanded="true" signature="15621:15628" ph="×" />
           </folding>
         </state>
       </provider>

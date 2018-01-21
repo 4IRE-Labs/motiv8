@@ -13,8 +13,10 @@ import erc20_token_artifacts from '../../build/contracts/Motiv8ERC20Token.json'
 import m8BadgeToken_artifacts from '../../build/contracts/M8BadgeToken.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
-var ERC20TokenContract = contract(erc20_token_artifacts);
-var M8BadgeToken = contract(m8BadgeToken_artifacts);
+var ERC20TokenContract = contract("0x97ce88c86d9e01e381495b2632109e5c9b4d0d6a", erc20_token_artifacts['abi']);
+var M8BadgeToken = contract("0xbaf7ad3d6e97d843a8b5d1bc7b3cd475d5521d2c", m8BadgeToken_artifacts['abi']);
+
+// var ERC20TokenContract = contract(“0x97ce88c86d9e01e381495b2632109e5c9b4d0d6a”, erc20_token_artifacts[‘abi’]);
 
 // The following code is simple to show off interacting with your contracts.
 // As your needs grow you will likely need to change its form and structure.
@@ -27,6 +29,16 @@ var allPointsChallenges;
 var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
 
 var ChallengeType = { badge: 0, points: 1 }
+
+var getQueryParam = function(param) {
+    var found = {};
+    window.location.search.substr(1).split("&").forEach(function(item) {
+        if (param ==  item.split("=")[0]) {
+            found = item.split("=")[1];
+        }
+    });
+    return found;
+};
 
 window.App = {
     start: function () {
@@ -132,7 +144,7 @@ window.App = {
     /* Start of loading account badges */
 
     loadAccountChallenges: function (account) {
-        App.loadAllChallenges(function (allChallenges) {
+        App.loadAllChallenges(function () {
             var tokenInstance;
             M8BadgeToken.deployed().then(function (instance) {
                 tokenInstance = instance;
@@ -196,6 +208,9 @@ window.App = {
         canvas.setAttribute("id", canvasId);
         canvas.setAttribute("width", 100);
         canvas.setAttribute("height", 100);
+        canvas.setAttribute("alt", "card image");
+        canvas.setAttribute("class", "card-img mx-auto");
+
         // document.body.appendChild(canvas);
 
 
