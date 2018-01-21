@@ -1,25 +1,4 @@
-// window.addEventListener('load', function () {
-//     Badge.drawBadge({
-//         canvasId: "canvas 1",
-//         face: 1,
-//         mask: 2,
-//         color: 3
-//     });
-//
-//     Badge.drawBadge({
-//         canvasId: "canvas 2",
-//         face: 2,
-//         mask: 3,
-//         color: 2
-//     });
-//
-//     Badge.drawBadge({
-//         canvasId: "canvas 3",
-//         face: 7,
-//         mask: 1,
-//         color: 4
-//     });
-// });
+
 
 window.Badge = {
     colors: [
@@ -44,8 +23,21 @@ window.Badge = {
         '#939393',
         '#55727f'
     ],    
+    /**
+     * Use: 
+     * Badge.drawBadge({
+            canvasId: string,
+            face: 1...8,
+            mask: 1...4,
+            color: 0...19
+        });
+     */
     drawBadge: function(data) {
-        data.canvas = document.getElementById(data.canvasId);
+
+        if (data.canvas == undefined) {
+            data.canvas = document.getElementById(data.canvasId);
+        }
+        
         data.context = data.canvas.getContext('2d');
         data.size = [data.canvas.width, data.canvas.height];
         data.context.fillStyle = Badge.colors[data.color];
