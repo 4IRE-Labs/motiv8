@@ -26,7 +26,7 @@ var account;
 var hostUrl = "http://cryptstarter.io";
 var allBadgeChallenges;
 var allPointsChallenges;
-var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
+// var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
 
 var ChallengeType = { badge: 0, points: 1 }
 
@@ -154,21 +154,22 @@ window.App = {
                 return App.loadBadgesByIdsPromise(tokensIds, tokenInstance);
             }).then(function(badges) {
                 App.createAndAppendSuccStatus("loadAccountChallengesBadges: " + JSON.stringify(badges));
-                // var accountChallenges = App.generateChallengesWithFullfiledBadges(badges);
-                var accountChallenges = [{"id":14,
-                    "address": "0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e",
-                    "title":"TEst",
-                    "description":" kadfk ahf sjhfkjas lfdsflaskf ",
-                    "reward_type":0,
-                    "created_at":"2018-01-21T07:41:13.459Z",
-                    "updated_at":"2018-01-21T07:41:13.459Z",
-                    badge: {
-                        challenge: "14",
-                        face: 2,
-                        mask: 4,
-                        color: 4,
-                        txHash: 35
-                    }}]
+                var accountChallenges = App.generateChallengesWithFullfiledBadges(badges);
+                //
+                // var accountChallenges = [{"id":14,
+                //     "address": "0x99a4572656eb49FFEEFbe9588f8e7ab0F8D6Eb5e",
+                //     "title":"TEst",
+                //     "description":" kadfk ahf sjhfkjas lfdsflaskf ",
+                //     "reward_type":0,
+                //     "created_at":"2018-01-21T07:41:13.459Z",
+                //     "updated_at":"2018-01-21T07:41:13.459Z",
+                //     badge: {
+                //         challenge: "14",
+                //         face: 2,
+                //         mask: 4,
+                //         color: 4,
+                //         txHash: 35
+                //     }}]
 
                 App.showGeneralBadgeChallenges(accountChallenges, App.createAccountBadgeChallengeTR);
                 App.drawBadges(badges);
