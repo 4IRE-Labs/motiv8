@@ -32,6 +32,7 @@ var allPointsChallenges;
 
 var ChallengeType = { badge: 0, points: 1 }
 var isDebug = false;
+var defaultProvider = isDebug ? "http://localhost:9545" : "https://rinkeby.infura.io/7a2aaxZR9Iu72CZzQzgt";
 
 var getQueryParam = function(param) {
     var found;
@@ -54,18 +55,18 @@ window.App = {
         // Get the initial account balance so it can be displayed.
         web3.eth.getAccounts(function (err, accs) {
             if (err != null) {
-                App.createAndAppendErrorStatus("There was an error fetching your accounts.");
+                App.createAndAppendErrorStatus(err);
                 return;
             }
 
             if (accs.length == 0) {
-                App.createAndAppendErrorStatus("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+                App.createAndAppendWarningStatus("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
                 return;
             }
 
             accounts = accs;
             account = accounts[0];
-            App.configureAdminMenu(account)
+            App.configureLogInDependedElements(account);
         });
     },
 
@@ -76,16 +77,18 @@ window.App = {
         status.innerHTML = message;
     },
 
-    setActiveAccountAddress: function (activeAccountAddress) {
-        var accountAddress = document.getElementById("activeAccountAddress");
-        accountAddress.innerHTML = "Account: " + activeAccountAddress;
-    },
-
     createAndAppendErrorStatus: function (message) {
         var div = document.createElement("div");
         div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
         div.setAttribute("role", "alert");
         App.appendStatus(div, "Hmm...", message);
+    },
+
+    createAndAppendWarningStatus: function (message) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "alert alert-warning alert-dismissible fade show");
+        div.setAttribute("role", "alert");
+        App.appendStatus(div, "Aha...", message);
     },
 
     createAndAppendSuccStatus: function (message) {
@@ -96,28 +99,31 @@ window.App = {
     },
 
     appendStatus: function (divAlert, title, message) {
+        var statusesElem = document.getElementById("statuses");
+        if (!statusesElem) {
+            return
+        }
+
         divAlert.innerHTML = "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
             "<span aria-hidden=\"true\">&times;</span>\n" +
             "</button>\n" +
             "<strong>" + title + "</strong> " + message;
 
-        document.getElementById("statuses").appendChild(divAlert);
-    },
-
-    printImportantInformation: function () {
-        web3.eth.getAccounts(function (err, accs) {
-            App.setActiveAccountAddress(accs[0]);
-        });
+        statusesElem.appendChild(divAlert);
     },
 
     checkMetamaskConnection: function (callBackSucc) {
         web3.eth.getAccounts(function (err, accs) {
-            if (err != undefined || accs.length == 0) {
-                window.location.replace("user-using-wrong-network.html");
+            if (err != undefined || accs.length == 0 ) {
+                App.redirectToEthClientSettings()
             } else {
                 callBackSucc(accs[0]);
             }
         });
+    },
+
+    redirectToEthClientSettings: function () {
+        window.location.replace("user-using-wrong-network.html");
     },
 
     /**
@@ -125,11 +131,11 @@ window.App = {
      */
     initMyAccount: function () {
         App.checkMetamaskConnection(function (account) {
-            App.printImportantInformation();
             App.updateAccountPoints(account);
             App.loadAccountChallenges(account);
         });
     },
+
     updateAccountPoints: function (account) {
         if (getQueryParam("account") != undefined) {
             account = getQueryParam("account");
@@ -322,10 +328,12 @@ window.App = {
      * HOME FUNCTIONS FROM HERE ON
      */
     initHome: function () {
-        App.printImportantInformation();
-        App.loadAllChallenges(function (challenges) {
+        App.loadAllChallenges(function () {
             App.showGeneralPointsChallenges(allPointsChallenges, App.createGeneralPointChallengeTR);
             App.showGeneralBadgeChallenges(allBadgeChallenges, App.createGeneralBadgeChallengeTR);
+
+            var isAuthorized = account != undefined;
+            App.configureAuthorizationButtons(isAuthorized);
         })
     },
 
@@ -419,8 +427,10 @@ window.App = {
         divCardBody.appendChild(p2);
 
         var button = document.createElement("button");
+        button.setAttribute("name", "claimButton");
         button.setAttribute("type", "button");
         button.setAttribute("class", "btn btn-success");
+        button.setAttribute("style", "display:none");
         button.innerText = "Claim";
         button.setAttribute("onclick", "App.claimBadge("+ challenge.id +");return false;");
         divCardBody.appendChild(button);
@@ -456,7 +466,19 @@ window.App = {
             App.createAndAppendErrorStatus(JSON.stringify(error))
         })
     },
-    
+
+    configureLogInDependedElements: function (account) {
+        var isAuthorized = account != undefined
+        this.configureAuthorizationButtons(isAuthorized);
+
+        if (account != undefined) {
+            this.configureAdminMenu(account);
+            this.setActiveAccountAddress(account);
+        }
+    },
+
+    /* Depended authorization Menu */
+
     configureAdminMenu: function (currentAccount) {
         var tokenInstance;
         ERC20TokenContract.at(ERC20TokenAddress).then(function (instance) {
@@ -472,8 +494,22 @@ window.App = {
     configureMenuAsAdmin: function (isAdmin) {
         var display = isAdmin == true ? "" : "none";
         document.getElementById("addNewChallenge").style.display = display;
+    },
 
+    setActiveAccountAddress: function (activeAccountAddress) {
+        var accountAddress = document.getElementById("activeAccountAddress");
+        accountAddress.innerHTML = "Account: " + activeAccountAddress;
+    },
+
+    /* Depended authorization Buttons */
+
+    configureAuthorizationButtons: function (isAuthorized) {
+        var display = isAuthorized == true ? "" : "none";
+        document.getElementsByName("claimButton").forEach(function (elem) {
+            elem.style.display = display;
+        })
     }
+
 
 
     // watchTokenEvents: function () {
@@ -510,10 +546,6 @@ window.App = {
     // }
 };
 
-var load = function () {
-
-}
-
 window.addEventListener('load', function () {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof web3 !== 'undefined') {
@@ -521,10 +553,8 @@ window.addEventListener('load', function () {
         // Use Mist/MetaMask's provider
         window.web3 = new Web3(web3.currentProvider);
     } else {
-        console.warn("No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask");
         // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-        window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+        window.web3 = new Web3(new Web3.providers.HttpProvider(defaultProvider));
     }
-
     App.start();
 });

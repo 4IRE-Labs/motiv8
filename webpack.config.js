@@ -59,6 +59,7 @@ module.exports = {
 
             // css
             {from: './app/stylesheets/bootstrap.css', to: "css/bootstrap.css"}
+
         ]),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
