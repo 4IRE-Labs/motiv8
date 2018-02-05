@@ -1,80 +1,49 @@
+const expectThrow = require('./helpers/expectThrow');
+
 var M8BadgeToken = artifacts.require("./M8BadgeToken.sol");
 
-contract('M8BadgeToken', function (accounts) {
-    var contract;
+contract('M8BadgeToken', async function (accounts) {
+    var contract = await M8BadgeToken.deployed();
+    const challengeId = "Challenge 0";
 
-    before(function() {
-        M8BadgeToken.deployed().then(function(instance) {
-            contract = instance;
-        });
+    it("1 - Should check that the genesis token owner is owner of the contract", async function() {
+        var owner = await contract.ownerOf(0);
+        assert.equal(owner, accounts[0], "Owner of 0 (Genesis) badge should be the contract owner.")
     });
 
-    it("should check the genesis token owner is owner of the contract", function() {
-        contract.ownerOf(0).then(address => {
-            assert.equal(address, accounts[0], "Owner of 0 (Genesis) badge should be the contract owner.")
-        });
-    });
-    
-    // @dev fix this b implementing ThrowerProxy contract
-    // it("should check that you cannot double create badge for same transaction id", function() {
-    //     contract.create("0", "Another badge for Tx #0", accounts[0]).then(error => {
-    //         assert.equal(true, "Badge should not be created", error != undefined);
-    //     });
-    // });
+    it("2 - Should create new badge for transaction that doesn't exist", async function() {
+        var txId = web3.toDecimal('0xee9f087ca77195ec40a79cd9b44626fc50e5183cb7dbfdf447cf36c9a6892025');        
+        await contract.create(txId, challengeId, accounts[0]);
 
-    it("should create new badge for transaction that doesn't exist", function() {                    
-        contract.create(
-            web3.toDecimal('0xee9f087ca77195ec40a79cd9b44626fc50e5183cb7dbfdf447cf36c9a6892025'), 
-            "Challenge 0", accounts[0]).then(tx => {            
-            return contract.tokensOfOwner.call(accounts[0]);            
-        }).then(tokens => {
-            assert.equal(tokens.length, 2, "Balance of account should equal 1");
-        });
+        var tokens = await contract.tokensOfOwner.call(accounts[0]);
+        assert.equal(tokens.length, 2, "Balance of account should equal 2 (Genesis Token and New one)");
     });
 
-    it("should return list of claimed transaction for Challenge 0", function(){
-        contract.claimedChallengeTransactions.call("Challenge 0").then(txHashes => {
-            assert.equal(txHashes.length, 2, "Number of transactions should equal number of badges for this challenge.");
-        });
+    it("3 - Should return list of claimed transaction for Challenge 0", async function() {
+        var txHashes = await contract.claimedChallengeTransactions.call(challengeId);
+        assert.equal(txHashes.length, 2, "Number of transactions should equal number of badges for this challenge.");
     });
 
-    it("should estimate gas", function(){
-        contract.create.estimateGas("3", "New badge for Tx #3", accounts[0]).then(gas => {            
-            console.log("Estimated gas: " + gas);
-            assert.equal(gas > 0, true, "Gas should be more then 0");
-        });
+    it("4 - Should estimate gas", async function() {
+        var gas = await contract.create.estimateGas("3", "New badge for Tx #3", accounts[0]);        
+        assert.equal(gas > 0, true, "Gas should be more then 0");
+        // console.log("Estimated gas: " + gas);
     }); 
 
-    it("should return badge with correct name", function(){
-        contract.getBadge.call("1").then(function (badge) {
-            console.log("Badge #1 txHash: " + badge[0]);
-            console.log("Badge #1 face: " + badge[1]);
-            console.log("Badge #1 mask: " + badge[2]);
-            console.log("Badge #1 color: " + badge[3]);
-            assert.equal(badge[0], "Challenge 0", "Badge challenge should be equal as previousely created");
-        });
+    it("5 - Should return badge with correct name", async function(){
+        const badgeId = "1";
+        var badge = await contract.getBadge.call(badgeId);
+        assert.equal(badge[0], challengeId, "Badge challenge should be equal as previousely created");
+
+        // console.log("Badge #1 txHash: " + badge[0]);
+        // console.log("Badge #1 face: " + badge[1]);
+        // console.log("Badge #1 mask: " + badge[2]);
+        // console.log("Badge #1 color: " + badge[3]);
     });
 
-    it("should add new wallet to list of donation wallets", function() {
-        contract.addDonationWallet('0x5aeda56215b167893e80b4fe645ba6d5bab767de').then(tx => {
-            return contract.allWallets.call()
-        }).then(wallets => {
-            assert.equal(wallets.length, 1, "Number of wallets should become 1");
-            assert.equal(wallets[0], '0x5aeda56215b167893e80b4fe645ba6d5bab767de', 'Wallet should be successfully added');
-        });
-    });
-
-    it("should delete item from list of donation wallets", function(){
-        var walletsBeforeDeletion = 0;
-        contract.allWallets.call().then(wallets => {
-            console.log("# of wallets in array is: " + wallets.length);
-            walletsBeforeDeletion = wallets.length;
-            return contract.deleteWallet(wallets[0]);
-        }).then(tx => {
-            return contract.allWallets.call()
-        }).then(wallets => {
-            assert.equal(walletsBeforeDeletion - wallets.length, 1, "Number of wallets after deletion should be 1 less then before");
-        });
-    });
+    // it("6 - Should check that you cannot double create badge for same transaction id", async function() {
+    //     var txId0 = web3.toDecimal('0x0');
+    //     expectThrow( contract.create(txId0, challengeId, accounts[0]) );        
+    // });
 
 });

@@ -35,26 +35,4 @@ contract M8BadgeToken is M8BadgeOwnership, Ownable {
         color = uint(badge.color);
         txHash = uint(badge.txHash);
     }
-
-    function addDonationWallet(address wallet) onlyOwner public returns(uint256) {
-        for (uint256 index = 0; index < donationWallets.length; index ++) {
-            require(donationWallets[index] != wallet);
-        }
-        return donationWallets.push(wallet) - 1;
-    }
-
-    function deleteWallet(uint256 walletId) onlyOwner public returns(uint256) {
-        require(walletId >= donationWallets.length);   
-
-        for (uint i = walletId; i<donationWallets.length-1; i++) {
-            donationWallets[i] = donationWallets[i+1];
-        }
-        delete donationWallets[donationWallets.length-1];
-        donationWallets.length--;
-        return donationWallets.length;
-    }
-
-    function allWallets() public view returns (address[]) {
-        return donationWallets;
-    }
 }
