@@ -5,8 +5,12 @@ var Motiv8ERC20Token = artifacts.require("./Motiv8ERC20Token.sol");
 
 contract('M8BadgeToken', async function (accounts) {
 
-    var contract = await M8BadgeToken.deployed();
+    var contract;
     const challengeId = "Challenge 0";
+
+    before(async function () {
+        contract = await M8BadgeToken.deployed();
+    });
 
     it("1 - Should check that the genesis token owner is owner of the contract", async function() {
         var owner = await contract.ownerOf(0);
@@ -52,14 +56,15 @@ contract('M8BadgeToken', async function (accounts) {
 
         var erc20 = await Motiv8ERC20Token.deployed();
         var balance = await erc20.balanceOf(accounts[0])
-
+        
         console.log("Balance of accounts[0] = " + balance.toNumber());
-
-        await erc20.approve(contract.address, balance);
+        
         await erc20.transfer(contract.address, balance);
 
         balance = await erc20.balanceOf(contract.address);
         console.log("Balance of badge contract = " + balance.toNumber());
+
+        await contract.setToken(erc20.address);
 
         var erc20address = await contract.erc20Token.call();
         console.log("Address " + erc20address.toString() + " == " + erc20.address.toString());

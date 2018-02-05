@@ -17,7 +17,6 @@ contract Motiv8ERC20Token is StandardToken {
   uint8 public constant decimals = 0;
   uint256 public totalSupply = 100000000000000;
 
-  // Constructor
   function Motiv8ERC20Token() public {
     balances[msg.sender] = totalSupply;
   }
