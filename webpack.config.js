@@ -34,7 +34,8 @@ module.exports = {
             {from: './app/images/card-img-1.svg', to: "images/card-img-1.svg"},
             {from: './app/images/card-img-2.svg', to: "images/card-img-2.svg"},
             {from: './app/images/card-img-3.svg', to: "images/card-img-3.svg"},
-            {from: './app/images/image.png', to: "images/image.png"},
+            {from: './app/images/wrong_provider.png', to: "images/wrong_provider.png"},
+            {from: './app/images/unlock_metamask.png', to: "images/unlock_metamask.png"},
             {from: './app/images/loading.png', to: "images/loading.png"},
             {from: './app/images/logo.svg', to: "images/logo.svg"},
 

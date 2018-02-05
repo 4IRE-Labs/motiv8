@@ -1,12 +1,14 @@
 //import jquery and bootstrap
 import 'jquery';
 import 'bootstrap-loader';
+
 // Import the page's CSS. Webpack will know what to do with it.
 import "../stylesheets/app.css";
 
 // Import libraries we need.
 import { default as Web3} from 'web3';
 import { default as contract } from 'truffle-contract'
+import { default as detectNetwork } from 'web3-detect-network'
 
 // Import our contract artifacts and turn them into usable abstractions.
 import erc20_token_artifacts from '../../build/contracts/Motiv8ERC20Token.json'
@@ -32,6 +34,7 @@ var allPointsChallenges;
 
 var ChallengeType = { badge: 0, points: 1 }
 var isDebug = false;
+var networkId = "4"; //Rinkeby network id => 4
 var defaultProvider = isDebug ? "http://localhost:9545" : "https://rinkeby.infura.io/7a2aaxZR9Iu72CZzQzgt";
 
 var getQueryParam = function(param) {
@@ -113,17 +116,37 @@ window.App = {
     },
 
     checkMetamaskConnection: function (callBackSucc) {
+        web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+            case networkId:
+                break // everithing is ok
+            default:
+                console.log('This is an unknown network.')
+                App.redirectToUserUsingWrongNetwork()
+            }
+        })
+
         web3.eth.getAccounts(function (err, accs) {
             if (err != undefined || accs.length == 0 ) {
-                App.redirectToEthClientSettings()
+                App.redirectToUnlockMetamask()
             } else {
                 callBackSucc(accs[0]);
             }
         });
+
+
     },
 
-    redirectToEthClientSettings: function () {
+    redirectToUserUsingWrongNetwork: function () {
         window.location.replace("user-using-wrong-network.html");
+    },
+
+    redirectToUnlockMetamask: function () {
+        window.location.replace("user-your-metamask-is-locked.html");
+    },
+
+    redirectToUserAccount: function () {
+        window.location.replace("user-profile.html");
     },
 
     /**
@@ -508,7 +531,48 @@ window.App = {
         document.getElementsByName("claimButton").forEach(function (elem) {
             elem.style.display = display;
         })
+    },
+
+
+    /**
+     * METAMASK CONFIGURATION FUNCTIONS FROM HERE ON
+     */
+
+    initMetamaskLockMonitoring: function () {
+        App.monitorMetamaskLock();
+    },
+
+    monitorMetamaskLock: function () {
+        web3.eth.getAccounts(function (err, accs) {
+            if (accs.length != 0 ) {
+                App.redirectToUserAccount();
+            }
+        });
+
+        setTimeout(App.monitorMetamaskLock, 5000);
+    },
+    
+
+
+    initMetamaskNetworkMonitoring: function () {
+        App.monitorMetamaskNetwork();
+    },
+
+    monitorMetamaskNetwork: function () {
+        web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+            case networkId:
+                App.redirectToUserAccount();
+                break;
+            default:
+                break;
+            }
+        });
+
+        setTimeout(App.monitorMetamaskNetwork, 5000);
     }
+
+
 
 
 
@@ -556,5 +620,6 @@ window.addEventListener('load', function () {
         // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
         window.web3 = new Web3(new Web3.providers.HttpProvider(defaultProvider));
     }
+
     App.start();
 });

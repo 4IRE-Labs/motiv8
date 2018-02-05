@@ -14,7 +14,7 @@
     <script src="./app.js"></script>
   </head>
   <body>
-    <div class="page container bg-light">
+    <div class="page">
       <header class="row bg-white px-4">
         <div class="col  col-lg-2">
           <div >
@@ -40,10 +40,20 @@
           </ul>
         </div>
       </header>
-      <div class="bg-light h-calc pt-5 text-center">
-        <h3 class="mb-4 mt-5">Your MetaMask is locked</h3>
-        <h5 class="mb-5  text-secondary font-weight-normal">Unlock the MetaMask in order to access your profile</h5>
+      <div class="bg-light row align-items-center h-calc">
+        <div class="m-auto text-center">
+          <h3 class="mb-4">Your MetaMask is locked</h3>
+          <h5 class="mb-5  text-secondary font-weight-normal">Unlock the MetaMask in order to access your profile</h5>
+          <img src="images/unlock_metamask.png" style="width:50%" alt="">
+        </div>
       </div>
     </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function () {
+        App.initMetamaskLockMonitoring();
+    });
+  </script>
+
   </body>
 </html>  
