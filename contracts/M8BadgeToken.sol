@@ -1,23 +1,31 @@
 pragma solidity ^0.4.17;
 import "./M8BadgeOwnership.sol";
-import 'node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol';
+import "./Motiv8ERC20Token.sol";
 
 contract M8BadgeToken is M8BadgeOwnership, Ownable {    
 
-    address[] donationWallets;
+    address public erc20Token;
     mapping(uint=>bool) claimedTransactions;
     mapping(string=>uint[]) challengeTransactions;
 
-    function M8BadgeToken() public {
-        create(0, "Challenge 0", msg.sender);
+    function M8BadgeToken(address _erc20Token) public {
+        erc20Token = _erc20Token;
+        create(0, "Challenge 0", msg.sender, 0);        
     }
 
-    function create(uint _txHash, string _challengeId, address _owner ) onlyOwner public returns (uint) {
+    function create(uint _txHash, string _challengeId, address _owner, uint _badgeType ) onlyOwner public returns (uint) {
         require(!claimedTransactions[_txHash]);  
         //@dev TODO: implement merkle proof protection              
         claimedTransactions[_txHash] = true;
         challengeTransactions[_challengeId].push(_txHash);
-        return _createBadge(_txHash, _challengeId, _owner);
+
+        if (_badgeType == 0) {
+            return _createBadge(_txHash, _challengeId, _owner);
+        } else {
+            Motiv8ERC20Token token = Motiv8ERC20Token(erc20Token);
+            // token.increaseApproval(_owner, 1);
+            // token.transfer(_owner, 1);
+        }
     }
 
     function claimedChallengeTransactions(string _challengeId) public view returns (uint[] txHashes) {

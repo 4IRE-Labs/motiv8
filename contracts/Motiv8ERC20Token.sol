@@ -10,7 +10,7 @@ import "zeppelin-solidity/contracts/token/StandardToken.sol";
  * @dev Implementation of the basic standard token.
  * @dev https://github.com/ethereum/EIPs/issues/20
  */
-contract Motiv8ERC20Token is StandardToken, Ownable {
+contract Motiv8ERC20Token is StandardToken {
 
   string public constant symbol = "MTV8"; //MTVB - badge, MTVP - points
   string public constant name = "Motiv8";
