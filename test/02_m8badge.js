@@ -6,10 +6,12 @@ var Motiv8ERC20Token = artifacts.require("./Motiv8ERC20Token.sol");
 contract('M8BadgeToken', async function (accounts) {
 
     var contract;
+    var erc20;
     const challengeId = "Challenge 0";
 
     before(async function () {
         contract = await M8BadgeToken.deployed();
+        erc20 = await Motiv8ERC20Token.deployed(); 
     });
 
     it("1 - Should check that the genesis token owner is owner of the contract", async function() {
@@ -54,7 +56,6 @@ contract('M8BadgeToken', async function (accounts) {
 
     it("7 - Should create point for challenge with point type", async function() {
 
-        var erc20 = await Motiv8ERC20Token.deployed();
         var balance = await erc20.balanceOf(accounts[0])
         
         console.log("Balance of accounts[0] = " + balance.toNumber());
@@ -69,8 +70,20 @@ contract('M8BadgeToken', async function (accounts) {
         var erc20address = await contract.erc20Token.call();
         console.log("Address " + erc20address.toString() + " == " + erc20.address.toString());
 
-        var txId = web3.toDecimal('0xee9f087ca77195ec40a79cd9b44626fc50e5183cb7dbfdf447cf36c9a6892026');
-        await contract.create(txId, challengeId, accounts[0], 1);
+        // sending ether to contract
+        await contract.sendTransaction({
+            from: accounts[0],
+            value: 500000
+        });
+
+        var txId = web3.toDecimal('0x10002');
+        console.log("Creating badge for account[0]: " + accounts[0]);
+        var tx = await contract.create(txId, challengeId, accounts[0], 1);
+        console.log("Last create tx: " + tx);
+
+        var balance = await contract.getPoints.call();
+        console.log("Points: " + balance);
+        assert.equal(balance.toNumber(), 10, "User should achieve 10 points");
     });
 
 });

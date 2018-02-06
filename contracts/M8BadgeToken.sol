@@ -26,8 +26,10 @@ contract M8BadgeToken is M8BadgeOwnership, Ownable {
             return _createBadge(_txHash, _challengeId, _owner);
         } else {
             // erc20Token.increaseApproval(_owner, 1);
-            erc20Token.transfer(_owner, 1);
+            erc20Token.transfer(_owner, 10);            
         }
+
+        return 0;
     }
 
     function claimedChallengeTransactions(string _challengeId) public view returns (uint[] txHashes) {
@@ -45,4 +47,10 @@ contract M8BadgeToken is M8BadgeOwnership, Ownable {
         color = uint(badge.color);
         txHash = uint(badge.txHash);
     }
+
+    function getPoints() public view returns (uint) {
+        erc20Token.balanceOf(msg.sender);
+    }
+
+    function () payable { }
 }
