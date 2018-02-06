@@ -16,20 +16,18 @@ contract M8BadgeToken is M8BadgeOwnership, Ownable {
         erc20Token = Motiv8ERC20Token(_erc20Token);
     }
 
-    function create(uint _txHash, string _challengeId, address _owner, uint _badgeType ) onlyOwner public returns (uint) {
+    function create(uint _txHash, string _challengeId, address _owner, uint _badgeType ) onlyOwner public {
         require(!claimedTransactions[_txHash]);  
         //@dev TODO: implement merkle proof protection              
         claimedTransactions[_txHash] = true;
         challengeTransactions[_challengeId].push(_txHash);
 
         if (_badgeType == 0) {
-            return _createBadge(_txHash, _challengeId, _owner);
+            _createBadge(_txHash, _challengeId, _owner);
         } else {
             // erc20Token.increaseApproval(_owner, 1);
             erc20Token.transfer(_owner, 10);            
         }
-
-        return 0;
     }
 
     function claimedChallengeTransactions(string _challengeId) public view returns (uint[] txHashes) {

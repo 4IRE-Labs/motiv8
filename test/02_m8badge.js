@@ -76,8 +76,9 @@ contract('M8BadgeToken', async function (accounts) {
             value: 500000
         });
 
-        var txId = web3.toDecimal('0x10002');
+        var txId = web3.toDecimal('0x101');
         console.log("Creating badge for account[0]: " + accounts[0]);
+
         var tx = await contract.create(txId, challengeId, accounts[0], 1);
         console.log("Last create tx: " + tx);
 
