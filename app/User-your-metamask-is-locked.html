@@ -11,35 +11,12 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png" href="images/favicon.png">
     <script src="./app.js"></script>
   </head>
   <body>
     <div class="page">
-      <header class="row bg-white px-4">
-        <div class="col  col-lg-2">
-          <div >
-            <a href="" class="logo">
-             <img src="images/logo.svg" alt="">
-            </a>
-          </div>
-        </div>
-        <div class="col justify-content-md-end">
-          <ul class="nav justify-content-end">
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="activeAccountAddress"></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="index.html">Chalenges</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="user-profile.html">My profile</a>
-            </li>
-            <li class="nav-item" style="display:none" id="addNewChallenge">
-              <a class="nav-link" href="admin-challenge-add.html">Add new challenge</a>
-            </li>
-          </ul>
-        </div>
-      </header>
+      <header class="row bg-white px-4" id="header_menu"></header>
       <div class="bg-light row align-items-center h-calc">
         <div class="m-auto text-center">
           <h3 class="mb-4">Your MetaMask is locked</h3>
@@ -47,6 +24,7 @@
           <img src="images/unlock_metamask.png" style="width:50%" alt="">
         </div>
       </div>
+      <footer class="pt-4 my-md-5 pt-md-5" id="footer_container"></footer>
     </div>
 
   <script type="text/javascript">

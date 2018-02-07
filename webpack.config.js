@@ -9,7 +9,8 @@ const webpack = require('webpack');
 // console.log(`=> bootstrap-loader configuration: ${bootstrapEntryPoints.dev}`);
 
 module.exports = {
-    entry: ['./app/javascripts/app.js', './app/javascripts/canvas.js'],
+    entry: ['./app/javascripts/app.js', './app/javascripts/canvas.js',
+        './app/javascripts/google_analytics.js', './app/javascripts/faq.js'],
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'app.js'
@@ -19,6 +20,8 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: './app/index.html', to: "index.html"},
             {from: './app/canvas.html', to: "canvas.html"},
+            {from: './app/menu.html', to: "menu.html"},
+            {from: './app/footer.html', to: "footer.html"},
 
             {from: './app/activity-activity.html', to: "activity-activity.html"},
             {from: './app/admin-challenge-add.html', to: "admin-challenge-add.html"},
@@ -28,6 +31,8 @@ module.exports = {
             {from: './app/user-using-wrong-network.html', to: "user-using-wrong-network.html"},
             {from: './app/user-your-metamask-is-locked.html', to: "user-your-metamask-is-locked.html"},
             {from: './app/wrong-network-2.html', to: "wrong-network-2.html"},
+            {from: './app/faq.html', to: "faq.html"},
+            {from: './app/privacy_policy.html', to: "privacy_policy.html"},
 
             // images
             {from: './app/images/add-icon.svg', to: "images/add-icon.svg"},
@@ -38,6 +43,7 @@ module.exports = {
             {from: './app/images/unlock_metamask.png', to: "images/unlock_metamask.png"},
             {from: './app/images/loading.png', to: "images/loading.png"},
             {from: './app/images/logo.svg', to: "images/logo.svg"},
+            {from: './app/images/favicon.png', to: "images/favicon.png"},
 
             // badge body
             {from: './app/assets/body.svg', to: "assets/body.svg"},

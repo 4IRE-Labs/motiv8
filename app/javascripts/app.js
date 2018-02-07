@@ -50,6 +50,8 @@ var getQueryParam = function(param) {
 window.App = {
     start: function () {
         var self = this;
+        App.insertMenu();
+        App.insertFooter();
 
         // Bootstrap the MetaCoin abstraction for Use.
         ERC20TokenContract.setProvider(web3.currentProvider);
@@ -74,6 +76,14 @@ window.App = {
     },
 
     // Methods to insert info to UI
+
+    insertMenu: function () {
+        $( "#header_menu" ).load( "menu.html" );
+    },
+
+    insertFooter: function () {
+        $( "#footer_container" ).load( "footer.html" );
+    },
 
     setMyAllPoints: function (message) {
         var status = document.getElementById("myAllPoints");
@@ -133,8 +143,6 @@ window.App = {
                 callBackSucc(accs[0]);
             }
         });
-
-
     },
 
     redirectToUserUsingWrongNetwork: function () {
@@ -520,8 +528,8 @@ window.App = {
     },
 
     setActiveAccountAddress: function (activeAccountAddress) {
-        var accountAddress = document.getElementById("activeAccountAddress");
-        accountAddress.innerHTML = "Account: " + activeAccountAddress;
+        // for debug
+        console.log("Current account number: " + activeAccountAddress)
     },
 
     /* Depended authorization Buttons */
