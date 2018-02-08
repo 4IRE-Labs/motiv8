@@ -3,7 +3,8 @@ module.exports = {
         testroc: {
             host: "localhost",
             port: 8545,
-            network_id: "*" // Match any network id
+            network_id: "*", // Match any network id
+            gas: 8999973
         },
         development: {
             host: "localhost",
