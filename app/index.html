@@ -17,28 +17,19 @@
   <body>  
     <div class="page">
       <header class="row bg-white px-4" id="header_menu"></header>
+
+      <div class="bg-light row align-items-center h-calc" id="loading_alert">
+        <div class="m-auto text-center">
+          <h3 class="mb-4">Loading...</h3>
+          <h5 class="mb-5  text-secondary font-weight-normal">Just a sec, we loading everything for you!</h5>
+        </div>
+      </div>
+
       <div class="container bg-light py-5">
         <div id="statuses"></div>
-        <div class="card p-3 mb-5" style="display:none">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col" class="py-4" colspan="3">Point Challenges</th>
-              </tr>
-            </thead>
-            <tbody id="pointsChallenges">
-              <tr>
-                <td scope="row"><strong>Created at</strong></td>
-                <td><strong>Title</strong></td>
-                <td class="text-right"><strong>Receiver Address</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <h4>Badges Challenges</h4>
-        <div class="row mt-3" id="allBadgeChallengesContainer"></div>
+        <div id="allBadgeChallengesContainer"></div>
       </div>
-      <footer class="pt-4 my-md-5 pt-md-5" id="footer_container"></footer>
+      <footer class="pt-4 pt-md-5" id="footer_container"></footer>
     </div>
 
   <script type="text/javascript">

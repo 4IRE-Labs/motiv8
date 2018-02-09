@@ -18,12 +18,22 @@ header {
 	color: #333333;
 }
 
+.nav-item {
+	padding-top: 10px;
+	height: 50px;
+	align: center;
+}
+
+.nav-link active {
+	color: #e83e8c;
+}
+
 .btn {
 	font-size: 15px;
 }
 
 .card {
-	margin-bottom: 10px;
+	margin-bottom: 35px;
 	box-shadow: 0 0 10px rgba(39, 36, 128, 0.15);
 }
 
@@ -51,6 +61,16 @@ header {
 .card-img {
 	width: 100px;
 	height: 100px;
+}
+
+.card-title {
+	font-family: Poppins;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	font-size: 18px;
+
+	color: #585A62;
 }
 
 .radio-group input {
@@ -127,7 +147,7 @@ header {
 }
 
 .h-calc {
-	height: calc(100vh - 70px);
+	height: calc(90vh - 90px);
 }
 
 .btn-add {
@@ -142,6 +162,43 @@ header {
 	box-shadow: 0px 5px 9px 1px rgba(0, 0, 0, 0.24);
 }
 
+.btn-success {
+	margin-right: 15px;
+	margin-top: 15px;
+	background: #27AE60;
+	border-radius: 3px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	font-size: 15px;
+	border-color: #27AE60;
+}
+
+.btn-primary {
+	margin-right: 15px;
+	margin-top: 15px;
+	background: #2D9CDB;
+	border-radius: 3px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: normal;
+	font-size: 15px;
+	border-color: #2D9CDB;
+}
+
+
+h4 a {
+	font-style: normal;
+	font-weight: normal;
+	line-height: 27px;
+	font-size: 19px;
+	text-align: center;
+	text-decoration-line: underline;
+	color: #FD7E56;
+}
+
+
+
 img {
 	max-width: 100%;
 }
@@ -155,6 +212,11 @@ footer {
 	border-top: #D4D4D4 solid 1px;
 	padding-bottom: 50px;
 }
+
+/*.footer_container {*/
+	/*margin: 0 auto;*/
+	/*padding: 0px;*/
+/*}*/
 
 /* FAQ */
 
@@ -178,7 +240,7 @@ footer {
 	top:17px;
 	width:0;
 	height:0;
-	border-bottom:5px solid #f00;
+	border-bottom:5px solid #FD7E56;
 	border-left:5px solid rgba(0,0,0,0);
 	border-right:5px solid rgba(0,0,0,0);
 }
@@ -204,6 +266,6 @@ footer {
 }
 
 .accordion-toggle.active {
-	color: #ff0000;
+	color: #FD7E56;
 }
 

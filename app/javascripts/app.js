@@ -11,16 +11,12 @@ import { default as contract } from 'truffle-contract'
 import { default as detectNetwork } from 'web3-detect-network'
 
 // Import our contract artifacts and turn them into usable abstractions.
-import erc20_token_artifacts from '../../build/contracts/Motiv8ERC20Token.json'
 import m8BadgeToken_artifacts from '../../build/contracts/M8BadgeToken.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
-var ERC20TokenContract = contract(erc20_token_artifacts);
-var ERC20TokenAddress = "0x97ce88c86d9e01e381495b2632109e5c9b4d0d6a";
 var M8BadgeToken = contract(m8BadgeToken_artifacts);
 var M8BadgeTokenAddress = "0xbaf7ad3d6e97d843a8b5d1bc7b3cd475d5521d2c";
 
-// var ERC20TokenContract = contract(“0x97ce88c86d9e01e381495b2632109e5c9b4d0d6a”, erc20_token_artifacts[‘abi’]);
 
 // The following code is simple to show off interacting with your contracts.
 // As your needs grow you will likely need to change its form and structure.
@@ -28,9 +24,9 @@ var M8BadgeTokenAddress = "0xbaf7ad3d6e97d843a8b5d1bc7b3cd475d5521d2c";
 var accounts;
 var account;
 var hostUrl = "https://cryptstarter.io";
+var etherscanUrl = "https://rinkeby.etherscan.io/tx/"
 var allBadgeChallenges;
 var allPointsChallenges;
-// var testAccount = "0x4cc120790781c9b61bb8d9893d439efdf02e2d30"
 
 var ChallengeType = { badge: 0, points: 1 }
 var isDebug = false;
@@ -54,7 +50,6 @@ window.App = {
         App.insertFooter();
 
         // Bootstrap the MetaCoin abstraction for Use.
-        ERC20TokenContract.setProvider(web3.currentProvider);
         M8BadgeToken.setProvider(web3.currentProvider);
 
         // Get the initial account balance so it can be displayed.
@@ -65,7 +60,7 @@ window.App = {
             }
 
             if (accs.length == 0) {
-                App.createAndAppendWarningStatus("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.");
+                App.createAndAppendWarningStatus("Couldn't get any accounts! Make sure your Ethereum client is configured correctly. " + "<a href='faq.html'>See details.</a>");
                 return;
             }
 
@@ -94,35 +89,42 @@ window.App = {
         var div = document.createElement("div");
         div.setAttribute("class", "alert alert-danger alert-dismissible fade show");
         div.setAttribute("role", "alert");
-        App.appendStatus(div, "Hmm...", message);
+        App.appendStatus(div, message);
     },
 
     createAndAppendWarningStatus: function (message) {
         var div = document.createElement("div");
         div.setAttribute("class", "alert alert-warning alert-dismissible fade show");
         div.setAttribute("role", "alert");
-        App.appendStatus(div, "Aha...", message);
+        App.appendStatus(div, message);
     },
 
     createAndAppendSuccStatus: function (message) {
         var div = document.createElement("div");
         div.setAttribute("class", "alert alert-success alert-dismissible fade show");
         div.setAttribute("role", "alert");
-        App.appendStatus(div, "OK", message);
+        App.appendStatus(div, message);
     },
 
-    appendStatus: function (divAlert, title, message) {
+    appendStatus: function (divAlert, message) {
         var statusesElem = document.getElementById("statuses");
         if (!statusesElem) {
             return
         }
+        var closeButton = "";
+        if (isDebug) {
+            closeButton = "<span aria-hidden=\"true\">&times;</span>\n";
+        }
 
         divAlert.innerHTML = "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
-            "<span aria-hidden=\"true\">&times;</span>\n" +
-            "</button>\n" +
-            "<strong>" + title + "</strong> " + message;
+             closeButton +
+            "</button>\n" + message;
 
         statusesElem.appendChild(divAlert);
+    },
+
+    hideLoadingAlert: function () {
+        document.getElementById("loading_alert").style.display = "none";
     },
 
     checkMetamaskConnection: function (callBackSucc) {
@@ -138,7 +140,12 @@ window.App = {
 
         web3.eth.getAccounts(function (err, accs) {
             if (err != undefined || accs.length == 0 ) {
-                App.redirectToUnlockMetamask()
+                var isSafari = window.safari !== undefined;
+                if (isSafari) {
+                    App.redirectToUserUseUnsupportedBrouser();
+                } else {
+                    App.redirectToUnlockMetamask();
+                }
             } else {
                 callBackSucc(accs[0]);
             }
@@ -157,30 +164,16 @@ window.App = {
         window.location.replace("user-profile.html");
     },
 
+    redirectToUserUseUnsupportedBrouser: function () {
+        window.location.replace("wrong_browser.html");
+    },
+
     /**
      * MY ACCOUNT FUNCTIONS FROM HERE ON
      */
     initMyAccount: function () {
         App.checkMetamaskConnection(function (account) {
-            App.updateAccountPoints(account);
             App.loadAccountChallenges(account);
-        });
-    },
-
-    updateAccountPoints: function (account) {
-        if (getQueryParam("account") != undefined) {
-            account = getQueryParam("account");
-        }
-        var tokenInstance;
-        ERC20TokenContract.at(ERC20TokenAddress).then(function (instance) {
-            tokenInstance = instance;
-            return tokenInstance.balanceOf.call(account);
-        }).then(function (value) {
-            console.log(value);
-            App.setMyAllPoints(value.valueOf())
-        }).catch(function (e) {
-            console.log(e);
-            App.createAndAppendErrorStatus("Error getting points balance; see log.")
         });
     },
 
@@ -240,11 +233,17 @@ window.App = {
                     return found;
                 })
 
-                App.showGeneralBadgeChallenges(accountChallenges, App.createAccountBadgeChallengeTR);
-                App.drawBadges(badges);
+                if(accountChallenges.length > 0) {
+                    App.showGeneralBadgeChallenges(accountChallenges, App.createAccountBadgeChallengeTR);
+                    App.drawBadges(badges);
+                } else {
+                    document.getElementById("no_badges_alert").style.display = "";
+                }
+                App.hideLoadingAlert();
 
             }).catch(function (e) {
-                App.createAndAppendErrorStatus(e.message)
+                App.createAndAppendErrorStatus(e.message);
+                App.hideLoadingAlert();
             });
         })
     },
@@ -255,20 +254,20 @@ window.App = {
         }))
     },
 
-    generateChallengesWithFullfiledBadges: function (badges) {
-        return badges.map(function (badge) {
-            var challenge = App.findChallengeForBadge(badge);
-            challenge.badge = badge;
-        }).filter(function (challenge) {
-            return challenge != undefined;
-        })
-    },
+    // generateChallengesWithFullfiledBadges: function (badges) {
+    //     return badges.map(function (badge) {
+    //         var challenge = App.findChallengeForBadge(badge);
+    //         challenge.badge = badge;
+    //     }).filter(function (challenge) {
+    //         return challenge != undefined;
+    //     })
+    // },
 
-    findChallengeForBadge: function (badge) {
-        return allBadgeChallenges.find(function (challenge) {
-            return challenge.id.toString() == badge.challenge;
-        })
-    },
+    // findChallengeForBadge: function (badge) {
+    //     return allBadgeChallenges.find(function (challenge) {
+    //         return challenge.id.toString() == badge.challenge;
+    //     })
+    // },
 
     createAccountBadgeChallengeTR: function (challenge) {
         var badge = challenge.badge
@@ -279,9 +278,6 @@ window.App = {
         canvas.setAttribute("height", 200);
         canvas.setAttribute("alt", "card image");
         canvas.setAttribute("class", "card-img mx-auto");
-
-        // document.body.appendChild(canvas);
-
 
         var div = document.createElement("div");
         div.setAttribute("class", "col-sm-4");
@@ -306,26 +302,11 @@ window.App = {
         p.innerText = challenge.description;
         divCardBody.appendChild(p);
 
-        var p2 = document.createElement("p");
-        p2.setAttribute("class", "card-text text-secondary");
-        p2.innerText = "Address: " + challenge.address;
-        divCardBody.appendChild(p2);
-
-
-        // div.innerHTML =
-            // '<div class="card pt-4">' +
-            // '<img class="card-img mx-auto" src="images/card-img-1.svg" alt="card image">' +
-            // '<div class="card-body">' +
-            // '<h5 class="card-title text-uppercase text-secondary">' +  + '</h5>' +
-            // '<p class="card-text text-secondary">'+challenge.description+'</p>' +
-            // '</div>' +
-            // '</div>';
         return div
     },
 
     drawBadges: function (badges) {
         badges.forEach(function (badge) {
-            var challange = badge[0];
             var face = badge[1].toNumber()+1;
             var mask = badge[2].toNumber()+1;
             var color = badge[3].toNumber();
@@ -355,6 +336,32 @@ window.App = {
         })
     },
 
+    donate: function (challengeId) {
+        console.log("----------" + challengeId)
+        var challenge = App.findChallengeWithId(challengeId)
+        if (challenge == undefined) {
+            return
+        }
+
+        var receiver = challenge.address;
+        var amount = web3.toWei(0.01, "ether");
+        web3.eth.sendTransaction({from: account, to: receiver, value: amount}, function(error, result){
+            if(!error) {
+                var url = etherscanUrl + result
+                App.createAndAppendSuccStatus("Many thanks! After your donation will be mined, you have to tap on 'Claim' " +
+                    "to finish the challenge! To see status of your transaction <a href="+ url+ " target='_blank'>go here</a>.");
+            } else {
+                App.createAndAppendErrorStatus("Something is wrong. Donation was not successful 😥");
+            }
+        });
+    },
+
+    findChallengeWithId: function (challengeId) {
+        return allBadgeChallenges.find(function (challenge) {
+            return challenge.id.toString() == challengeId;
+        })
+    },
+
     /**
      * HOME FUNCTIONS FROM HERE ON
      */
@@ -377,15 +384,17 @@ window.App = {
             allBadgeChallenges = App.filterChallenges(challenges, ChallengeType.badge);
             allPointsChallenges = App.filterChallenges(challenges, ChallengeType.points);
             callback(challenges)
+            App.hideLoadingAlert();
         })
         .fail(function(error) {
-            App.createAndAppendErrorStatus(JSON.stringify(error))
+            App.createAndAppendErrorStatus(JSON.stringify(error));
+            App.hideLoadingAlert();
         })
     },
 
     filterChallenges: function (allChallenges, type) {
         return allChallenges.filter(function (challenge) {
-            return challenge.reward_type == type
+            return challenge.reward_type == type;
         })
     },
 
@@ -452,18 +461,22 @@ window.App = {
         p.innerText = challenge.description;
         divCardBody.appendChild(p);
 
-        var p2 = document.createElement("p");
-        p2.setAttribute("class", "card-text text-secondary");
-        p2.innerHTML = "<strong>Address:</strong> " + challenge.address;
-        divCardBody.appendChild(p2);
-
         var button = document.createElement("button");
+        button.setAttribute("name", "claimButton");
+        button.setAttribute("type", "button");
+        button.setAttribute("class", "btn btn-primary");
+        button.setAttribute("style", "display:none");
+        button.innerText = "Claim";
+        button.setAttribute("onclick", "App.claimBadge("+ challenge.id +");return false;");
+        divCardBody.appendChild(button);
+
+        button = document.createElement("button");
         button.setAttribute("name", "claimButton");
         button.setAttribute("type", "button");
         button.setAttribute("class", "btn btn-success");
         button.setAttribute("style", "display:none");
-        button.innerText = "Claim";
-        button.setAttribute("onclick", "App.claimBadge("+ challenge.id +");return false;");
+        button.innerText = "Donate";
+        button.setAttribute("onclick", "App.donate("+ challenge.id +");return false;");
         divCardBody.appendChild(button);
 
         return div
@@ -512,7 +525,7 @@ window.App = {
 
     configureAdminMenu: function (currentAccount) {
         var tokenInstance;
-        ERC20TokenContract.at(ERC20TokenAddress).then(function (instance) {
+        M8BadgeToken.at(M8BadgeTokenAddress).then(function (instance) {
             tokenInstance = instance;
             return tokenInstance.owner.call();
         }).then(function (value) {
@@ -559,8 +572,6 @@ window.App = {
 
         setTimeout(App.monitorMetamaskLock, 5000);
     },
-    
-
 
     initMetamaskNetworkMonitoring: function () {
         App.monitorMetamaskNetwork();
@@ -579,43 +590,6 @@ window.App = {
 
         setTimeout(App.monitorMetamaskNetwork, 5000);
     }
-
-
-
-
-
-    // watchTokenEvents: function () {
-    //     var tokenInstance;
-    //     ERC20TokenContract.at(ERC20TokenAddress).then(function (instance) {
-    //         tokenInstance = instance;
-    //         tokenInstance.allEvents({}, {fromBlock: 0, toBlock: 'latest'}).watch(function (error, result) {
-    //             var alertbox = document.createElement("div");
-    //             alertbox.setAttribute("class", "alert alert-info  alert-dismissible");
-    //             var closeBtn = document.createElement("button");
-    //             closeBtn.setAttribute("type", "button");
-    //             closeBtn.setAttribute("class", "close");
-    //             closeBtn.setAttribute("data-dismiss", "alert");
-    //             closeBtn.innerHTML = "<span>&times;</span>";
-    //             alertbox.appendChild(closeBtn);
-    //
-    //             var eventTitle = document.createElement("div");
-    //             eventTitle.innerHTML = '<strong>New Event: ' + result.event + '</strong>';
-    //             alertbox.appendChild(eventTitle);
-    //
-    //
-    //             var argsBox = document.createElement("textarea");
-    //             argsBox.setAttribute("class", "form-control");
-    //             argsBox.innerText = JSON.stringify(result.args);
-    //             alertbox.appendChild(argsBox);
-    //             document.getElementById("tokenEvents").appendChild(alertbox);
-    //             //document.getElementById("tokenEvents").innerHTML += '<div class="alert alert-info  alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div></div><div>Args: '+JSON.stringify(result.args) + '</div></div>';
-    //
-    //         });
-    //     }).catch(function (e) {
-    //         console.log(e);
-    //         App.setStatus("Error getting balance; see log.");
-    //     });
-    // }
 };
 
 window.addEventListener('load', function () {
