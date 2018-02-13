@@ -7,25 +7,29 @@ html, body {
 
 .page {
 	height: 100%;
+	overflow-y: auto;
+  	overflow-x: hidden;
+	min-height: 500px;
+}
+
+.container--S {
+	max-width: 880px;
+	margin: auto;
+}
+
+#container_page_out {
+	min-height: 100%;
 }
 
 header {
-	padding: 18px 0;
+	height: 70px;
+	padding: 12px 0;
+  	align-items: center;
 }
 
 .nav-link {
 	font-size: 13px;
 	color: #333333;
-}
-
-.nav-item {
-	padding-top: 10px;
-	height: 50px;
-	align: center;
-}
-
-.nav-link active {
-	color: #e83e8c;
 }
 
 .btn {
@@ -147,7 +151,8 @@ header {
 }
 
 .h-calc {
-	height: calc(90vh - 90px);
+	height: calc(100vh - 70px);
+	min-height: 500px;
 }
 
 .btn-add {
@@ -203,20 +208,156 @@ img {
 	max-width: 100%;
 }
 
-
-/* Sticky footer styles -------------------------------------------------- */
-
-footer {
+.promo {
 	width: 100%;
-	background-color: #ffffff;
-	border-top: #D4D4D4 solid 1px;
-	padding-bottom: 50px;
+	margin: 0;
+	background-color: #FD7E56;
 }
 
-/*.footer_container {*/
-	/*margin: 0 auto;*/
-	/*padding: 0px;*/
-/*}*/
+.promo__info {
+	max-width: 600px;
+	padding: 0 3.056%;
+	margin: auto;
+	text-align: center;
+}
+
+.promo__info h2 {
+	color: #fff;
+	font-size: 42px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.promo .btn {
+	min-width: 164px;
+	color: #FD7E56;
+	background-color: #fff;
+}
+
+.promo .btn:focus,
+.promo .btn:hover {
+	background-color: transparent;
+	color: #fff;
+	border-color: #fff;
+}
+
+.w-300 {
+	max-width: 300px;
+}
+
+.h6--S {
+	font-size: 0.8em;
+}
+
+.mb-6 {
+	margin-bottom: 6em !important;
+}
+
+.footer {
+	border-top: 1px solid #D4D4D4;
+	background-color: #fff;
+}
+
+.footer .nav-item {
+	margin-bottom: 5px;
+}
+
+.footer .nav-link {
+	display: inline-block;
+  padding: 0 0 3px;
+	color: rgba(51, 51, 51, 0.5);
+	background-image: linear-gradient(to top,currentColor 1px,transparent 1px);
+  background-repeat: no-repeat;
+  background-size: 0 100%;
+  transition: background-size .25s cubic-bezier(1,.095,.48,1.015) 0s,color .25s cubic-bezier(1,.095,.48,1.015) 0s;
+  background-position: 50% 100%;
+	font-size: 13px;
+}
+
+.footer .nav-link:focus,
+.footer .nav-link:hover {
+	background-size: 100% 100%;
+}
+
+.footer .nav-link.active {
+	background-size: 100% 100%;
+}
+
+.footer .nav-link.active:focus,
+.footer .nav-link.active:hover {
+	background-size: 0 100%;
+}
+
+.btn-custom {
+	min-width: 146px;
+	height: 51px;
+	line-height: 40px;
+	font-size: 20px;
+}
+
+.btn-secondary {
+	background-color: #FD7E56;
+	border-color: #FD7E56;
+}
+
+.btn-secondary:focus,
+.btn-secondary:hover {
+	background-color: transparent;
+	color: #FD7E56;
+	border-color: #FD7E56;
+}
+
+@media (max-width: 600px) {
+
+	.header {
+		height: auto;
+		flex-wrap: wrap;
+	}
+
+	.header__nav {
+		flex: 100 100 100%;
+	}
+
+	.header .nav {
+		justify-content: flex-start !important;
+	}
+
+	.custom-box {
+		display: block !important;
+	}
+
+	.btn-custom {
+		height: 40px;
+		line-height: 30px;
+		font-size: 15px;
+	}
+}
+
+@media (min-width: 600px) {
+
+	.custom-box {
+		position: relative;
+	}
+
+	.custom-box .col-alt {
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: auto;
+	}
+
+	.custom-box .col-alt img {
+		display: block;
+		max-height: 427px;
+	}
+
+}
+
+.col-alt {
+	padding-right: 0;
+	padding-left: 0;
+}
 
 /* FAQ */
 
@@ -268,4 +409,3 @@ footer {
 .accordion-toggle.active {
 	color: #FD7E56;
 }
-

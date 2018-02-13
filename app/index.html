@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>All challenges</title>
+    <title>motiv8 - Blockchain Gamification Engine</title>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=1" />
@@ -10,33 +10,18 @@
     <meta name="format-detection" content="telephone=no"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <script src="./app.js"></script>
   </head>
-  <body>  
+  <body>
     <div class="page">
-      <header class="row bg-white px-4" id="header_menu"></header>
+      <header class="row bg-white px-4 header" id="header_menu"></header>
 
-      <div class="bg-light row align-items-center h-calc" id="loading_alert">
-        <div class="m-auto text-center">
-          <h3 class="mb-4">Loading...</h3>
-          <h5 class="mb-5  text-secondary font-weight-normal">Just a sec, we loading everything for you!</h5>
+        <div id="container_page_out">
+          <div id="container_page_inner"></div>
         </div>
-      </div>
 
-      <div class="container bg-light py-5">
-        <div id="statuses"></div>
-        <div id="allBadgeChallengesContainer"></div>
-      </div>
-      <footer class="pt-4 pt-md-5" id="footer_container"></footer>
+      <footer class="footer p-5" id="footer_container"></footer>
     </div>
-
-  <script type="text/javascript">
-    window.addEventListener('load', function () {
-        App.initHome();
-    });
-  </script>
-
   </body>
-</html>  
+</html>

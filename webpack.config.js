@@ -10,7 +10,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: ['./app/javascripts/app.js', './app/javascripts/canvas.js',
-        './app/javascripts/google_analytics.js', './app/javascripts/faq.js'],
+        './app/javascripts/google_analytics.js'],
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'app.js'
@@ -23,17 +23,19 @@ module.exports = {
             {from: './app/menu.html', to: "menu.html"},
             {from: './app/footer.html', to: "footer.html"},
 
-            {from: './app/activity-activity.html', to: "activity-activity.html"},
-            {from: './app/admin-challenge-add.html', to: "admin-challenge-add.html"},
-            {from: './app/admin-challenge-list.html', to: "admin-challenge-list.html"},
-            {from: './app/user-profile.html', to: "user-profile.html"},
-            {from: './app/user-using-wrong-network.html', to: "user-using-wrong-network.html"},
-            {from: './app/user-your-metamask-is-locked.html', to: "user-your-metamask-is-locked.html"},
-            {from: './app/wrong_browser.html', to: "wrong_browser.html"},
-            {from: './app/faq.html', to: "faq.html"},
-            {from: './app/privacy_policy.html', to: "privacy_policy.html"},
-            {from: './app/terms_of_use.html', to: "terms_of_use.html"},
-
+            // inner pages
+            {from: './app/innerPages/main.html', to: "innerPages/main.html"},
+            {from: './app/innerPages/user-profile.html', to: "innerPages/user-profile.html"},
+            {from: './app/innerPages/user-using-wrong-network.html', to: "innerPages/user-using-wrong-network.html"},
+            {from: './app/innerPages/user-your-metamask-is-locked.html', to: "innerPages/user-your-metamask-is-locked.html"},
+            {from: './app/innerPages/wrong_browser.html', to: "innerPages/wrong_browser.html"},
+            {from: './app/innerPages/faq.html', to: "innerPages/faq.html"},
+            {from: './app/innerPages/privacy_policy.html', to: "innerPages/privacy_policy.html"},
+            {from: './app/innerPages/terms_of_use.html', to: "innerPages/terms_of_use.html"},
+            {from: './app/innerPages/admin-challenge-add.html', to: "innerPages/admin-challenge-add.html"},
+            {from: './app/innerPages/loading.html', to: "innerPages/loading.html"},
+            {from: './app/innerPages/no_badges.html', to: "innerPages/no_badges.html"},
+            {from: './app/innerPages/about.html', to: "innerPages/about.html"},
 
             // images
             {from: './app/images/add-icon.svg', to: "images/add-icon.svg"},
@@ -45,6 +47,11 @@ module.exports = {
             {from: './app/images/loading.png', to: "images/loading.png"},
             {from: './app/images/logo.svg', to: "images/logo.svg"},
             {from: './app/images/favicon.png', to: "images/favicon.png"},
+
+            {from: './app/images/image-2@2x.png', to: "images/image-2@2x.png"},
+            {from: './app/images/image-3.png', to: "images/image-3.png"},
+            {from: './app/images/image-4@2x.png', to: "images/image-4@2x.png"},
+            {from: './app/images/image@2x.png', to: "images/image@2x.png"},
 
             {from: './app/images/opera_icon.png', to: "images/opera_icon.png"},
             {from: './app/images/chrome_icon.png', to: "images/chrome_icon.png"},
@@ -70,7 +77,8 @@ module.exports = {
             {from: './app/assets/mask_4.svg', to: "assets/mask_4.svg"},
 
             // css
-            {from: './app/stylesheets/bootstrap.css', to: "css/bootstrap.css"}
+            {from: './app/stylesheets/bootstrap.css', to: "css/bootstrap.css"},
+            {from: './app/stylesheets/app.css', to: "css/app.css"}
 
         ]),
         new webpack.ProvidePlugin({

@@ -1,30 +1,40 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12 col-md">
-      <h5>Menu</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="user-profile.html">My profile</a></li>
-        <li><a class="text-muted" href="index.html">Challenges</a></li>
-        <li><a class="text-muted" href="about.html">About</a></li>
-        <li><a class="text-muted" href="faq.html">FAQ</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Social networks</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="https://www.facebook.com/4irelabs">Facebook</a></li>
-        <li><a class="text-muted" href="https://www.reddit.com/r/motiv8">Reddit</a></li>
-        <li><a class="text-muted" href="https://medium.com/practical-blockchain">Medium</a></li>
-      </ul>
-    </div>
-    <div class="col-12 col-md">
-      <h5>About</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="https://4irelabs.com">Made by 4IRE labs</a></li>
-        <br/>
-        <li><a class="text-muted" href="terms_of_use.html">Terms of use</a></li>
-        <li><a class="text-muted" href="privacy_policy.html">Privacy policy</a></li>
-      </ul>
-    </div>
+<div class="row">
+  <ul class="nav flex-column col-sm-4">
+    <li class="nav-item">
+      <a class="nav-link" href="#" onclick="App.replaceByProfilePage();return false;">My Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" onclick="App.replaceByMainPage();return false;">Challenges</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" onclick="App.replaceByAboutPage();return false;">About</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" onclick="App.replaceByFAQPage();return false;">FAQ</a>
+    </li>
+  </ul>
+  <ul class="nav flex-column col-sm-4">
+    <li class="nav-item">
+      <a class="nav-link" href="https://www.facebook.com/4irelabs" target="_blank">Facebook</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="https://medium.com/practical-blockchain" target="_blank">Medium</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="https://www.reddit.com/r/motiv8">Reddit</a>
+    </li>
+  </ul>
+  <div class="col-sm-4 ml-auto d-flex justify-content-end">
+    <ul class="nav flex-column">
+      <li class="nav-item mb-5">
+        <a class="nav-link" href="https://4irelabs.com" target="_blank">Made by 4IRE labs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" onclick="App.replaceByTermsOfUsePage();return false;">Terms of use</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" onclick="App.replaceByPrivacyPolicyPage();return false;">Privacy policy</a>
+      </li>
+    </ul>
   </div>
 </div>
